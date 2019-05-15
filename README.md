@@ -10,10 +10,21 @@ answering messages.
 
 ### Project's Structure ###
 
-- __data:__ log files & training datasets.
-- __doc:__ documentation.
-- __src:__ source code.
-
+```bash
+.
+├── data
+│   └── dataset.xlsx
+├── dependencies
+│   └── chromedriver
+├── src
+│   ├── __init__.py
+│   ├── crawler.py
+│   └── lang_processing.py
+├── src
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
 ----------------
 
 ### Modules ###
