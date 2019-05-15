@@ -2,8 +2,8 @@
 
 Optimized for python 3.6
 
-This project is aimed on creating personal assistants for my daily life and 
-answering messages.
+This project is aimed on creating personal assistants for replying messages 
+about specifics issues.
 
 ------------------------------
 
