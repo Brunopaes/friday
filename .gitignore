@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# idea folder
+./idea
+
+# User data
+./User_Data
+
+# xlsx
+*.xlsx
