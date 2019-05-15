@@ -8,7 +8,7 @@ import os
 
 class NLTK:
     def __init__(self, model):
-        self.dataFrame = pandas.read_excel(os.path.abspath(os.getcwd() + os.sep + os.pardir + '/data/dataset.xlsx'))
+        self.dataFrame = pandas.read_csv(os.path.abspath(os.getcwd() + os.sep + os.pardir + '/data/dataset.csv'), sep=';')
         self.stopwords = nltk.corpus.stopwords.words("portuguese")
         self.stemmer = nltk.stem.RSLPStemmer()
 

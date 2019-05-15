@@ -30,7 +30,7 @@ answering messages.
 ### Modules ###
 
 - __crawler:__ Class responsible for accessing internet.
-- __NLTK:__ Class responsible for processing natural language.
+- __lang_processing:__ Class responsible for processing natural language.
 
 ----------------
 

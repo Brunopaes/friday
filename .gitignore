@@ -109,5 +109,8 @@ venv.bak/
 # User data
 ./User_Data
 
+# csv
+*.csv
+
 # xlsx
 *.xlsx
