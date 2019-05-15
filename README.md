@@ -48,9 +48,13 @@ or access the root directory _(~/requirements.txt)_ and run the following comman
 
 ### Usage Notes ###
 
-For running the script on terminal/cmd, access the project directory _(./src)_ and run the following command:
+For running the script on terminal/cmd, access the project directory _(~/src/)_ and run the following command:
 
 `python __init__.py`
+
+or 
+
+`python crawler.py`
 
 _obs: you must be inside the scr directory._
 
