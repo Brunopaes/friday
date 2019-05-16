@@ -10,6 +10,9 @@ import os
 
 
 class Message:
+    """This class access the whatsapp, seek for unread messages and replies it.
+
+    """
     def __init__(self):
         self.path = os.path.abspath(os.getcwd() + os.sep + os.pardir + '/dependencies/chromedriver')
         self.options = webdriver.ChromeOptions()
@@ -25,11 +28,15 @@ class Message:
         self.model = self.nltk.fit(self.librarian)
 
     def get_unread(self):
+        """This function gets the unread chats and click on it.
+
+        Returns
+        -------
+
+        """
         try:
             unread_chat = self.driver.find_element_by_css_selector('.OUeyt')
             unread_chat.click()
-
-            time.sleep(3)
 
             self.get_last_message()
 
@@ -37,10 +44,24 @@ class Message:
             pass
 
     def get_source_code(self):
+        """This function gets the source code from whatsapp web and retunrn it.
+
+        Returns
+        -------
+        BeautifulSoup(html, 'html5lib') : bs4.BeautifulSoup
+            Parsed html.
+
+        """
         html = self.driver.page_source
-        return BeautifulSoup(html, 'html.parser')
+        return BeautifulSoup(html, 'html5lib')
 
     def get_last_message(self):
+        """This functions get the last unread message.
+
+        Returns
+        -------
+
+        """
         soup = self.get_source_code()
 
         lst_msg = soup.find_all('span', {'class': 'selectable-text invisible-space copyable-text'})
@@ -73,6 +94,17 @@ class Message:
             pass
 
     def __call__(self, *args, **kwargs):
+        """Main function
+
+        Parameters
+        ----------
+        args
+        kwargs
+
+        Returns
+        -------
+
+        """
         print('Starting API')
         input()
 
