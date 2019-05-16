@@ -38,6 +38,8 @@ class Message:
             unread_chat = self.driver.find_element_by_css_selector('.OUeyt')
             unread_chat.click()
 
+            time.sleep(5)
+
             self.get_last_message()
 
         except Exception:
@@ -53,7 +55,7 @@ class Message:
 
         """
         html = self.driver.page_source
-        return BeautifulSoup(html, 'html5lib')
+        return BeautifulSoup(html, 'html.parser')
 
     def get_last_message(self):
         """This functions get the last unread message.
@@ -71,9 +73,9 @@ class Message:
             if '!quit' in msg.lower():
                 quit()
             elif '!pause' in msg.lower():
-                if int(msg.split(' ')[-1]) > 3600:
+                if int(msg.split(' ')[-1]) > 900:
                     input_box = self.driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
-                    input_box.send_keys('Cannot pause for more than 3600 seconds!')
+                    input_box.send_keys('Cannot pause for more than 900 seconds!')
                     input_box.send_keys(Keys.ENTER)
                 else:
                     input_box = self.driver.find_element_by_xpath('//*[@id="main"]/footer/div[1]/div[2]/div/div[2]')
