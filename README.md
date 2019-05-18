@@ -13,7 +13,7 @@ about specifics issues.
 ```bash
 .
 ├── data
-│   └── dataset.xlsx
+│   └── dataset.csv
 ├── dependencies
 │   └── chromedriver
 ├── src
