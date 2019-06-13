@@ -17,7 +17,7 @@ class Message:
         self.path = os.path.abspath(os.getcwd() + os.sep + os.pardir + '/dependencies/chromedriver')
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('--user-data-dir=./User_Data')
-        self.driver = webdriver.Chrome(self.path, chrome_options=self.options)
+        self.driver = webdriver.Chrome(self.path, options=self.options)
         self.url = 'https://web.whatsapp.com'
 
         self.driver.get('http://web.whatsapp.com')
@@ -35,7 +35,7 @@ class Message:
 
         """
         try:
-            unread_chat = self.driver.find_element_by_css_selector('.OUeyt')
+            unread_chat = self.driver.find_element_by_css_selector('P6z4j')
             unread_chat.click()
 
             time.sleep(5)
