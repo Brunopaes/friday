@@ -1,5 +1,5 @@
 scikit-learn==0.21.0
 selenium==3.14.1
 pandas==0.24.2
-nltk==3.3
+nltk==3.4.5
 bs4==0.0.1
