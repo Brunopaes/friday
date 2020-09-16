@@ -11,7 +11,10 @@ class NLTK:
 
     """
     def __init__(self, model=MultinomialNB):
-        self.dataFrame = pandas.read_csv(os.path.abspath(os.getcwd() + os.sep + os.pardir + '/data/dataset.csv'), sep=';')
+        self.dataFrame = \
+            pandas.read_csv(os.path.abspath(
+                os.getcwd() + os.sep + os.pardir + '/data/dataset.csv'),
+                sep=';')
         self.stopwords = nltk.corpus.stopwords.words("portuguese")
         self.stemmer = nltk.stem.RSLPStemmer()
 
@@ -35,7 +38,9 @@ class NLTK:
         """
         dictionary = set()
         for i in self.df_token:
-            valid_words = [self.stemmer.stem(nxDF) for nxDF in i if nxDF not in self.stopwords]
+            valid_words = \
+                [self.stemmer.stem(nx_df) for nx_df in i if nx_df not in
+                 self.stopwords]
             dictionary.update(valid_words)
 
         tuples = zip(dictionary, range(len(dictionary)))
@@ -52,6 +57,7 @@ class NLTK:
             Text input.
         librarian : dict
             Dictionary with stem valid words.
+
         Returns
         -------
         vectorized_array : list
@@ -75,6 +81,7 @@ class NLTK:
         ----------
         librarian : dict
             Dictionary with stem valid words.
+
         Returns
         -------
         model : sklearn.Model
@@ -97,29 +104,20 @@ class NLTK:
             Inputted text.
         librarian : dict
             Dictionary with stem valid words.
+
         Returns
         -------
         x[0] : str
             Answer for the given text input.
 
         """
-        phrase_ = self.vectorise(nltk.tokenize.word_tokenize(phrase), librarian)
+        phrase_ = \
+            self.vectorise(nltk.tokenize.word_tokenize(phrase), librarian)
         x = model.predict([phrase_])
 
         return x[0]
 
     def __call__(self, *args, **kwargs):
-        """Main function
-
-        Parameters
-        ----------
-        args
-        kwargs
-
-        Returns
-        -------
-
-        """
         self.__init__(MultinomialNB)
         librarian = self.cleaning_dict()
         model = self.fit(librarian)
