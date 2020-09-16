@@ -7,55 +7,67 @@ about specifics issues.
 
 ------------------------------
 
-
 ### Project's Structure ###
 
 ```bash
 .
-├── data
-│   └── dataset.csv
-├── dependencies
-│   └── chromedriver
-├── src
-│   ├── __init__.py
-│   ├── crawler.py
-│   └── lang_processing.py
-├── src
-├── .gitignore
-├── README.md
-└── requirements.txt
+└── friday
+    ├── data
+    │   └── data.db
+    ├── docs
+    │   └── CREDITS
+    ├── src
+    │   ├── __init__.py
+    │   ├── settings.json
+    │   └── telegram_replier.py
+    ├── tests
+    │   └── unittests
+    │   └── __init__.py
+    ├── .gitignore
+    ├── LICENSE
+    ├── README.md
+    └── requirements.txt
 ```
 ----------------
 
-### Modules ###
+#### Directory description
 
-- __crawler:__ Class responsible for accessing internet.
-- __lang_processing:__ Class responsible for processing natural language.
-
-----------------
-
-### Python requirements ###
-
-In your python environment, run the following command:
-
-`pip install requests bs4`
-
-or access the root directory _(~/requirements.txt)_ and run the following command:
-
-`pip install -r requirements.txt`
+- __data:__ The data dir. Group of non-script support files.
+- __docs:__ The documentation dir.
+- __src:__ The scripts & source code dir.
+- __tests:__ The unittests dir.
 
 ----------------
 
-### Usage Notes ###
+## Usage Notes
 
-For running the script on terminal/cmd, access the project directory _(~/src/)_ and run the following command:
+Section aimed on clarifying some running issues.
 
-`python __init__.py`
+### Running
 
-or 
+For running it, at the `~/src` directory just run:
 
-`python crawler.py`
+```shell script
+python telegram_replier.py
+``` 
 
-_obs: you must be inside the scr directory._
+or, if importing it as a module, just run:
+````python
+from telegram_replier import echo_message
 
-----------------
+if __name__ == '__main__':
+    echo_message('args', 'kwargs')
+````
+
+### JSON structure
+
+````json
+{
+  "API_TOKEN": "A12JASBN12JASIJDW12321KN"
+}
+````
+
+_obs: in order to run this application you must have a json file at 
+`~/src/settings.json`. This json must follow the structure above._
+
+---------------
