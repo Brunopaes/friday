@@ -1,5 +1,6 @@
-scikit-learn>=0.21.0
-selenium>=3.14.1
-pandas>=0.24.2
-bs4>=0.0.1
-nltk>=3.3
+pyTelegramBotAPI>=3.7.2
+opencv-python>=4.4.0.42
+pytesseract>=0.3.6
+selenium>=3.141.0
+Pillow>=7.2.0
+numpy>=1.19.1

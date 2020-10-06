@@ -103,14 +103,10 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# idea folder
-./idea
+*.json
 
-# User data
-./User_Data
+poppler-0.68.0/
 
-# csv
-*.csv
+.idea/
 
-# xlsx
-*.xlsx
+src/crawlers/User_Data/
