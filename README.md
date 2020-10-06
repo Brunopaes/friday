@@ -7,7 +7,7 @@ about specifics issues.
 
 ------------------------------
 
-### Project's Structure ###
+### Project's Structure
 
 ```bash
 .
