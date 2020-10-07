@@ -29,6 +29,8 @@ def echo_message(message):
         )
     except AttributeError:
         bot.send_message(message.chat.id, 'Function does not exists!')
+    except TypeError:
+        bot.send_message(message.chat.id, 'Function does not exists!')
 
 
-bot.polling()
+bot.polling(none_stop=True)
