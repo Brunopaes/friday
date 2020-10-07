@@ -102,4 +102,5 @@ class NexusRPA:
             self.handling_alert()
 
             if self.alert is not None:
+                self.driver.close()
                 return self.alert
