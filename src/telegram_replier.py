@@ -31,6 +31,8 @@ def echo_message(message):
         bot.send_message(message.chat.id, 'Function does not exists!')
     except TypeError:
         bot.send_message(message.chat.id, 'Function does not exists!')
+    except Exception as e:
+        bot.send_message(message.chat.id, '{}'.format(e))
 
 
 bot.polling(none_stop=True)
