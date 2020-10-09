@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from bottle import run
+
 import punch_a_clock
 import telebot
 import json
@@ -35,4 +37,4 @@ def echo_message(message):
         bot.send_message(message.chat.id, '{}'.format(e))
 
 
-bot.polling(none_stop=True)
+run(bot.polling(none_stop=True), host='localhost', port=8000)
