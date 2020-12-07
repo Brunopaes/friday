@@ -12,7 +12,7 @@ API_TOKEN = json.loads(open('settings.json', 'r').read())['API_TOKEN']
 bot = telebot.TeleBot(API_TOKEN)
 
 function = {
-    'ponto': punch_a_clock.NexusRPA,
+    'piro_ponto': punch_a_clock.NexusRPA,
     'eta': eta.CalcETA
 }
 
