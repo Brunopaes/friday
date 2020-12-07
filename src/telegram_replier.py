@@ -4,6 +4,7 @@ from bottle import run
 import punch_a_clock
 import telebot
 import json
+import eta
 
 
 API_TOKEN = json.loads(open('settings.json', 'r').read())['API_TOKEN']
@@ -11,7 +12,8 @@ API_TOKEN = json.loads(open('settings.json', 'r').read())['API_TOKEN']
 bot = telebot.TeleBot(API_TOKEN)
 
 function = {
-    'ponto': punch_a_clock.NexusRPA
+    'piro_ponto': punch_a_clock.NexusRPA,
+    'eta': eta.CalcETA
 }
 
 
@@ -30,11 +32,12 @@ def echo_message(message):
             message.chat.id, function.get(message.text.lower())().__call__()
         )
     except AttributeError:
-        bot.send_message(message.chat.id, 'Function does not exists!')
+        pass
     except TypeError:
-        bot.send_message(message.chat.id, 'Function does not exists!')
+        pass
     except Exception as e:
-        bot.send_message(message.chat.id, '{}'.format(e))
+        e.args
+        pass
 
 
 run(bot.polling(none_stop=True), host='localhost', port=8000)
