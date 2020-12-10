@@ -1,6 +1,6 @@
 ## Friday - Personal Assistant
 
-Optimized for python 3.6
+<small>_Optimized for python 3.6+_</small>
 
 This project is aimed on creating personal assistants for replying messages 
 about specifics issues.
