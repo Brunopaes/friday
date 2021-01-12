@@ -3,6 +3,7 @@ from bottle import run
 
 import punch_a_clock
 import telebot
+import mando
 import json
 import eta
 
@@ -12,6 +13,7 @@ API_TOKEN = json.loads(open('settings.json', 'r').read())['API_TOKEN']
 bot = telebot.TeleBot(API_TOKEN)
 
 function = {
+    'this is the way': mando.ThisIsTheWay,
     '11620317': punch_a_clock.NexusRPA,
     'eta': eta.CalcETA
 }
