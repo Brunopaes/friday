@@ -43,16 +43,10 @@ def echo_message(message):
     except TypeError:
         try:
             msg = message.text.lower().split(' ')
-            if len(msg) == 1:
-                bot.send_message(
-                    message.chat.id,
-                    'Argument invalid!'
-                )
-            else:
-                bot.send_message(
-                    message.chat.id,
-                    arg_functions.get(msg[0])(''.join(msg[1:])).__call__()
-                )
+            bot.send_message(
+                message.chat.id,
+                arg_functions.get(msg[0])(' '.join(msg[1:])).__call__()
+            )
         except TypeError:
             pass
     except Exception as e:

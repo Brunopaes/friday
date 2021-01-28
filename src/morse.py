@@ -68,4 +68,4 @@ class MorseParser:
                 '': '.--.-. ',
                 ' ': '~'
             }.get(i.lower(), '')
-        return str_.replace('~', '/')
+        return str_.replace('~', '/ ')
