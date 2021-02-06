@@ -32,17 +32,20 @@ def echo_message(message):
         The message object.
 
     """
-    if len(message.text.split(' ')) > 1:
-        msg = message.text.lower().split(' ')
-        bot.send_message(
-            message.chat.id,
-            arg_functions.get(msg[0])(' '.join(msg[1:]))
-        )
-    else:
-        bot.send_message(
-            message.chat.id,
-            functions.get(message.text.lower())()
-        )
+    try:
+        if len(message.text.split(' ')) > 1:
+            msg = message.text.lower().split(' ')
+            bot.send_message(
+                message.chat.id,
+                arg_functions.get(msg[0])(' '.join(msg[1:]))
+            )
+        else:
+            bot.send_message(
+                message.chat.id,
+                functions.get(message.text.lower())()
+            )
+    except TypeError as e:
+        e.args
 
 
 run(bot.polling(none_stop=True), host='localhost', port=8000)
