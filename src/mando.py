@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-class ThisIsTheWay:
-    def __call__(self, *args, **kwargs):
-        return 'This is the way'
+
+def this_is_the_way():
+    return 'This is the way'

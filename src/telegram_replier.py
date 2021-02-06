@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 from bottle import run
 
-import punch_a_clock
+import skill_caller
 import telebot
-import mando
-import morse
 import json
-import eta
 
 
 API_TOKEN = json.loads(open('settings.json', 'r').read())['API_TOKEN']
@@ -14,13 +11,14 @@ API_TOKEN = json.loads(open('settings.json', 'r').read())['API_TOKEN']
 bot = telebot.TeleBot(API_TOKEN)
 
 functions = {
-    'this is the way': mando.ThisIsTheWay,
-    '11620317': punch_a_clock.NexusRPA,
-    'eta': eta.CalcETA
+    'this is the way': skill_caller.return_mando,
+    '11620317': skill_caller.return_punch_a_clock,
+    'eta': skill_caller.return_eta
 }
 
 arg_functions = {
-    'morse': morse.MorseParser,
+    'morse': skill_caller.return_morse,
+    'coke': skill_caller.return_coke
 }
 
 
@@ -34,24 +32,17 @@ def echo_message(message):
         The message object.
 
     """
-    try:
+    if len(message.text.split(' ')) > 1:
+        msg = message.text.lower().split(' ')
         bot.send_message(
-            message.chat.id, functions.get(message.text.lower())().__call__()
+            message.chat.id,
+            arg_functions.get(msg[0])(' '.join(msg[1:]))
         )
-    except AttributeError:
-        pass
-    except TypeError:
-        try:
-            msg = message.text.lower().split(' ')
-            bot.send_message(
-                message.chat.id,
-                arg_functions.get(msg[0])(' '.join(msg[1:])).__call__()
-            )
-        except TypeError:
-            pass
-    except Exception as e:
-        e.args
-        pass
+    else:
+        bot.send_message(
+            message.chat.id,
+            functions.get(message.text.lower())()
+        )
 
 
 run(bot.polling(none_stop=True), host='localhost', port=8000)

@@ -3,7 +3,10 @@ __all__ = [
     'punch_a_clock',
     'helpers',
     'eta',
-    'morse'
+    'morse',
+    'mando',
+    'skill_caller',
+    'coke'
 ]
 
 from . import __all__
