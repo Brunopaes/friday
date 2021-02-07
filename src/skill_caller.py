@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
-from src import coke, eta, mando, morse, punch_a_clock
+import punch_a_clock
+import mando
+import morse
+import coke
+import eta
 
 
 def return_punch_a_clock():
