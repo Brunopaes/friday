@@ -1,29 +1,6 @@
 # -*- coding: utf-8 -*-
-from google.cloud import bigquery
-
+import helpers
 import random
-import os
-
-
-def set_path():
-    """This function sets settings.json in PATH.
-
-    Returns
-    -------
-
-    """
-    path = os.path.abspath('gcp-credentials.json')
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = path
-
-
-def start_connection():
-    """Function used to start connection with GCP's Big Query.
-
-    Returns
-    -------
-
-    """
-    return bigquery.Client()
 
 
 def insert_coke(msg):
@@ -40,8 +17,8 @@ def insert_coke(msg):
 
     """
     if isinstance(msg, float) or isinstance(msg, int):
-        set_path()
-        client = start_connection()
+        helpers.set_path()
+        client = helpers.start_connection()
 
         client.query("""
         INSERT INTO
@@ -67,8 +44,8 @@ def aggregate(msg):
     msg: Query result - to be displayed at Telegram's chat.
 
     """
-    set_path()
-    client = start_connection()
+    helpers.set_path()
+    client = helpers.start_connection()
 
     query_dict = {
         'day': """
@@ -134,6 +111,19 @@ def aggregate(msg):
 
 
 def drop(msg):
+    """Meme function - someday will be used to drop register in coke database.
+
+    Parameters
+    ----------
+    msg : str
+        To be dropped register.
+
+    Returns
+    -------
+    msg : str
+        Random message.
+
+    """
     return random.choice([
         'olha aqui, você é tão feio que a sua incubadora tinha insulfilm',
         'faz o seguinte, enfia um peixe no cu e diz que é sereia',

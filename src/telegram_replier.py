@@ -13,7 +13,8 @@ bot = telebot.TeleBot(API_TOKEN)
 functions = {
     'this is the way': skill_caller.return_mando,
     '11620317': skill_caller.return_punch_a_clock,
-    'eta': skill_caller.return_eta
+    'eta': skill_caller.return_eta,
+    'btc': skill_caller.return_btc
 }
 
 arg_functions = {

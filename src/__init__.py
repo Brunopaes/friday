@@ -6,7 +6,8 @@ __all__ = [
     'morse',
     'mando',
     'skill_caller',
-    'coke'
+    'coke',
+    'btc'
 ]
 
 from . import __all__

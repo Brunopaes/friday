@@ -3,6 +3,7 @@ import punch_a_clock
 import mando
 import morse
 import coke
+import btc
 import eta
 
 
@@ -71,3 +72,15 @@ def return_coke(msg):
     }
 
     return coke_functions.get(msg_[0])(msg_[-1])
+
+
+def return_btc():
+    """Middle function for calling btc package.
+
+    Returns
+    -------
+    msg : str
+        The BTC api return (buy and sell prices).
+
+    """
+    return btc.BTCoin().__call__()
