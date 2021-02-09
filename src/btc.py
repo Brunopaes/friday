@@ -27,10 +27,24 @@ class BTCoin:
 
     # Used in __init__
     def requesting(self):
+        """This function is used to request into api endpoint.
+
+        Returns
+        -------
+        response : str
+            The str api response.
+
+        """
         return requests.post(self.url, data=self.payload).text
 
     # Used in __call__
     def parse_response(self):
+        """This function parses the api response into a dictionary.
+
+        Returns
+        -------
+
+        """
         self.operation.get('operation').append('buy')
         self.operation.get('price').append(
             float(self.response.split(',')[6])
@@ -49,6 +63,12 @@ class BTCoin:
 
     # Used in __call__
     def inserting_in_bd(self):
+        """This function inserts buy/sell data into BigQuery.
+
+        Returns
+        -------
+
+        """
         for i in range(0, 2):
             self.client.query(self.query.format(
                 self.operation.get('operation')[i],
@@ -58,6 +78,14 @@ class BTCoin:
 
     # Used in __call__
     def sending_message(self):
+        """This function sends a telegram message containing buy/sell data.
+
+        Returns
+        -------
+        msg : str
+            Buying/Selling data.
+
+        """
         return 'Compra: R$ {}\nVenda: R$ {}'.format(
             str(self.operation.get('price')[0]),
             str(self.operation.get('price')[1]),
@@ -68,7 +96,3 @@ class BTCoin:
         self.inserting_in_bd()
 
         return self.sending_message()
-
-
-if __name__ == '__main__':
-    BTCoin().__call__()
