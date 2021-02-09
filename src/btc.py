@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import requests
-import helpers
 
 
 class BTCoin:
@@ -14,16 +13,6 @@ class BTCoin:
             'price': [],
             'spread': [],
         }
-
-        self.query = """
-            INSERT INTO
-                `mooncake-304003.DS_Bruno.btc-trader` 
-            VALUES
-                ("{}", {}, {}, CURRENT_DATETIME("America/Sao_Paulo"))
-        """
-
-        helpers.set_path()
-        self.client = helpers.start_connection()
 
     # Used in __init__
     def requesting(self):
@@ -62,21 +51,6 @@ class BTCoin:
         )
 
     # Used in __call__
-    def inserting_in_bd(self):
-        """This function inserts buy/sell data into BigQuery.
-
-        Returns
-        -------
-
-        """
-        for i in range(0, 2):
-            self.client.query(self.query.format(
-                self.operation.get('operation')[i],
-                self.operation.get('price')[i],
-                self.operation.get('spread')[i])
-            )
-
-    # Used in __call__
     def sending_message(self):
         """This function sends a telegram message containing buy/sell data.
 
@@ -93,6 +67,5 @@ class BTCoin:
 
     def __call__(self, *args, **kwargs):
         self.parse_response()
-        self.inserting_in_bd()
 
         return self.sending_message()
