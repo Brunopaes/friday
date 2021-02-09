@@ -24,8 +24,8 @@ arg_functions = {
 
 
 @bot.message_handler(func=lambda message: True)
-def echo_message(message):
-    """This function gets the incoming message and replies with it.
+def message_handler(message):
+    """This function gets the incoming message and calls the respective skill.
 
     Parameters
     ----------
