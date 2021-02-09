@@ -16,19 +16,22 @@ def insert_coke(msg):
     msg : success or failure message - to be displayed at Telegram's chat.
 
     """
-    if isinstance(msg, float) or isinstance(msg, int):
-        helpers.set_path()
-        client = helpers.start_connection()
+    try:
+        msg = float(msg)
+    except ValueError:
+        return 'Cannot add non-numeric values!'
 
-        client.query("""
-        INSERT INTO
-            `mooncake-304003.DS_Bruno.coca-cola` 
-        VALUES
-            ({}, CURRENT_DATETIME("America/Sao_Paulo"))
-        """.format(msg))
+    helpers.set_path()
+    client = helpers.start_connection()
 
-        return '{} ml successfully inserted!'.format(msg)
-    return 'Cannot add non-numeric values!'
+    client.query("""
+    INSERT INTO
+        `mooncake-304003.DS_Bruno.coca-cola` 
+    VALUES
+        ({}, CURRENT_DATETIME("America/Sao_Paulo"))
+    """.format(msg))
+
+    return '{} ml successfully inserted!'.format(msg)
 
 
 def aggregate(msg):
