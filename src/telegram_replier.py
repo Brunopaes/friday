@@ -45,8 +45,14 @@ def message_handler(message):
                 message.chat.id,
                 functions.get(message.text.lower())()
             )
-    except TypeError as e:
-        e.args
+    except TypeError:
+        try:
+            bot.send_message(
+                message.chat.id,
+                functions.get(message.text.lower())()
+            )
+        except TypeError as e:
+            e.args
 
 
 run(bot.polling(none_stop=True), host='localhost', port=8000)
