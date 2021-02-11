@@ -151,3 +151,19 @@ def start_connection():
 
     """
     return bigquery.Client()
+
+
+def check_user(user):
+    """This function checks user permissions.
+
+    Parameters
+    ----------
+    user : int
+        User credentials.
+
+    Returns
+    -------
+
+    """
+    if user != 144068478:
+        raise AttributeError

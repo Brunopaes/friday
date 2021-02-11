@@ -2,6 +2,7 @@
 from bottle import run
 
 import skill_caller
+import helpers
 import telebot
 import json
 
@@ -12,7 +13,7 @@ bot = telebot.TeleBot(API_TOKEN)
 
 functions = {
     'this is the way': skill_caller.return_mando,
-    '11620317': skill_caller.return_punch_a_clock,
+    'ponto': skill_caller.return_punch_a_clock,
     'eta': skill_caller.return_eta,
     'btc': skill_caller.return_btc
 }
@@ -34,6 +35,9 @@ def message_handler(message):
 
     """
     try:
+        if message.text.lower() in ('ponto', ):
+            helpers.check_user(message.from_user.id)
+
         if len(message.text.split(' ')) > 1:
             msg = message.text.lower().split(' ')
             bot.send_message(
@@ -53,6 +57,10 @@ def message_handler(message):
             )
         except TypeError as e:
             e.args
+    except AttributeError as e:
+        e.args
+    except Exception as e:
+        e.args
 
 
 run(bot.polling(none_stop=True), host='localhost', port=8000)

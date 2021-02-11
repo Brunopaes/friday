@@ -54,6 +54,7 @@ def aggregate(msg):
         'day': """
             SELECT
                 SUM(MILLILITERS) AS SUMMARY,
+                MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(MONTH FROM DATETIME),
                  "-", EXTRACT(DAY FROM DATETIME)) AS SAFRA
@@ -62,53 +63,65 @@ def aggregate(msg):
             GROUP BY
                 SAFRA
             ORDER BY 
-                SAFRA DESC
+                DATETIME DESC
         """,
         'week': """
             SELECT
                 SUM(MILLILITERS) AS SUMMARY,
+                MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(WEEK FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
             GROUP BY
                 SAFRA
+            ORDER BY 
+                DATETIME DESC
         """,
         'month': """
             SELECT
                 SUM(MILLILITERS) AS SUMMARY,
+                MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(MONTH FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
             GROUP BY
                 SAFRA
+            ORDER BY 
+                DATETIME DESC
         """,
         'quarter': """
             SELECT
                 SUM(MILLILITERS) AS SUMMARY,
+                MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(QUARTER FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
             GROUP BY
                 SAFRA
+            ORDER BY 
+                DATETIME DESC
         """,
         'year': """
             SELECT
                 SUM(MILLILITERS) AS SUMMARY,
+                MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
             GROUP BY
                 SAFRA
+            ORDER BY 
+                DATETIME DESC
         """
     }
 
     query_result = [i for i in client.query(query_dict.get(msg))]
 
     return '{}: {} ml'.format(
-        query_result[0].values()[1],
+        query_result[0].values()[2],
         query_result[0].values()[0],
     )
 
