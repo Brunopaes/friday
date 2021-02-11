@@ -3,7 +3,7 @@
 <small>_Optimized for python 3.6+_</small>
 
 This project is aimed on creating a telegram personal assistant for replying
- messages and automating daily tasks by using specific /commands.
+ messages and automating daily tasks by using specific ```/commands```.
 
 ------------------------------
 
