@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import punch_a_clock
+import helpers
 import mando
 import morse
 import coke
@@ -7,8 +8,13 @@ import btc
 import eta
 
 
-def return_punch_a_clock():
+def return_punch_a_clock(message):
     """Middle function for calling punch_a_clock package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------
@@ -16,11 +22,17 @@ def return_punch_a_clock():
         Punch a Clock function.
 
     """
+    helpers.check_user(message.from_user.id)
     return punch_a_clock.NexusRPA().__call__()
 
 
-def return_eta():
+def return_eta(message):
     """Middle function for calling return_eta package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------
@@ -31,8 +43,13 @@ def return_eta():
     return eta.calc_eta()
 
 
-def return_mando():
+def return_mando(message):
     """Middle function for calling mando package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------
@@ -43,8 +60,13 @@ def return_mando():
     return mando.this_is_the_way()
 
 
-def return_morse(msg):
+def return_morse(message):
     """Middle function for calling morse package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------
@@ -52,11 +74,16 @@ def return_morse(msg):
         Morse parser function.
 
     """
-    return morse.morse_parser(msg)
+    return morse.morse_parser(' '.join(message.text.split(' ')[1:]))
 
 
-def return_coke(msg):
+def return_coke(message):
     """Middle function for calling coke package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------
@@ -64,18 +91,23 @@ def return_coke(msg):
         Coke functions.
 
     """
-    msg_ = msg.split(' ')
+    msg_ = message.text.lower().split(' ')
     coke_functions = {
         'add': coke.insert_coke,
         'check': coke.aggregate,
         'drop': coke.drop
     }
 
-    return coke_functions.get(msg_[0])(msg_[-1])
+    return coke_functions.get(msg_[1])(message)
 
 
-def return_btc():
+def return_btc(message):
     """Middle function for calling btc package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------

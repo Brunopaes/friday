@@ -3,44 +3,51 @@ import helpers
 import random
 
 
-def insert_coke(msg):
+def insert_coke(message):
     """Function to add ingested coke.
 
     Parameters
     ----------
-    msg : str
-        To be added value.
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------
     msg : success or failure message - to be displayed at Telegram's chat.
 
     """
+    message_text = message.text.lower().split(' ')
     try:
-        msg = float(msg)
+        value = float(message_text[-1])
     except ValueError:
         return 'Cannot add non-numeric values!'
 
     helpers.set_path()
     client = helpers.start_connection()
 
+    user_id = message.from_user.id
+    username = '{} {}'.format(
+        message.from_user.first_name,
+        message.from_user.last_name
+    )
+
     client.query("""
     INSERT INTO
         `mooncake-304003.DS_Bruno.coca-cola` 
     VALUES
-        ({}, CURRENT_DATETIME("America/Sao_Paulo"))
-    """.format(msg))
+        ({}, CURRENT_DATETIME("America/Sao_Paulo"), {}, "{}")
+    """.format(value, user_id, username))
 
-    return '{} ml successfully inserted!'.format(msg)
+    return '{} successfully inserted {} ml!'.format(username, value)
 
 
-def aggregate(msg):
+def aggregate(message):
     """Function to check the sum of ingested coke grouped by periodicity.
 
     Parameters
     ----------
-    msg : str
-        Periodicity - day, week, month, quarter, semester, year.
+    message : telebot.types.Message
+        The message object.
 
     Returns
     -------
@@ -53,6 +60,7 @@ def aggregate(msg):
     query_dict = {
         'day': """
             SELECT
+                USERNAME,
                 SUM(MILLILITERS) AS SUMMARY,
                 MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
@@ -60,78 +68,124 @@ def aggregate(msg):
                  "-", EXTRACT(DAY FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
+            WHERE
+                USER_ID = {}
             GROUP BY
-                SAFRA
+                SAFRA,
+                USERNAME
             ORDER BY 
                 DATETIME DESC
         """,
         'week': """
             SELECT
+                USERNAME,
                 SUM(MILLILITERS) AS SUMMARY,
                 MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(WEEK FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
+            WHERE
+                USER_ID = {}
             GROUP BY
-                SAFRA
+                SAFRA,
+                USERNAME
             ORDER BY 
                 DATETIME DESC
         """,
         'month': """
             SELECT
+                USERNAME,
                 SUM(MILLILITERS) AS SUMMARY,
                 MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(MONTH FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
+            WHERE
+                USER_ID = {}
             GROUP BY
-                SAFRA
+                SAFRA,
+                USERNAME
             ORDER BY 
                 DATETIME DESC
         """,
         'quarter': """
             SELECT
+                USERNAME,
                 SUM(MILLILITERS) AS SUMMARY,
                 MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(QUARTER FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
+            WHERE
+                USER_ID = {}
             GROUP BY
-                SAFRA
+                SAFRA,
+                USERNAME
             ORDER BY 
                 DATETIME DESC
         """,
         'year': """
             SELECT
+                USERNAME,
                 SUM(MILLILITERS) AS SUMMARY,
                 MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME)) AS SAFRA
             FROM
                 `mooncake-304003.DS_Bruno.coca-cola`
+            WHERE
+                USER_ID = {}
             GROUP BY
-                SAFRA
+                SAFRA,
+                USERNAME
             ORDER BY 
                 DATETIME DESC
+        """,
+        'top': """
+            SELECT
+                USERNAME,
+                SUM(MILLILITERS) AS SUMMARY
+            FROM
+                `mooncake-304003.DS_Bruno.coca-cola`
+            GROUP BY
+                USERNAME
+            ORDER BY
+                SUMMARY DESC
         """
     }
 
-    query_result = [i for i in client.query(query_dict.get(msg))]
+    periodicity = message.text.lower().split(' ')[-1]
 
-    return '{}: {} ml'.format(
-        query_result[0].values()[2],
-        query_result[0].values()[0],
-    )
+    user_id = message.from_user.id
+
+    query_result = \
+        [i for i in client.query(query_dict.get(periodicity).format(user_id))]
+
+    top_drinkers = ''
+    if periodicity == 'top':
+        for row in query_result:
+            top_drinkers += \
+                '{}: {}\n'.format(row.values()[0], row.values()[1])
+        return top_drinkers
+    else:
+        try:
+            return 'In {}: {} ingested {} ml'.format(
+                query_result[0].values()[3],
+                query_result[0].values()[0],
+                query_result[0].values()[1]
+            )
+        except IndexError:
+            return 'Impossible, perhaps the archives are incomplete!'
 
 
-def drop(msg):
+def drop(message):
     """Meme function - someday will be used to drop register in coke database.
 
     Parameters
     ----------
-    msg : str
+    message : str
         To be dropped register.
 
     Returns

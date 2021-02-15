@@ -2,7 +2,6 @@
 from bottle import run
 
 import skill_caller
-import helpers
 import telebot
 import json
 
@@ -34,26 +33,23 @@ def message_handler(message):
         The message object.
 
     """
+    msg = message.text.lower().split(' ')
     try:
-        if message.text.lower() in ('ponto', ):
-            helpers.check_user(message.from_user.id)
-
         if len(message.text.split(' ')) > 1:
-            msg = message.text.lower().split(' ')
             bot.send_message(
                 message.chat.id,
-                arg_functions.get(msg[0])(' '.join(msg[1:]))
+                arg_functions.get(msg[0])(message)
             )
         else:
             bot.send_message(
                 message.chat.id,
-                functions.get(message.text.lower())()
+                functions.get(msg[0])(message)
             )
     except TypeError:
         try:
             bot.send_message(
                 message.chat.id,
-                functions.get(message.text.lower())()
+                functions.get(' '.join(msg))(message)
             )
         except TypeError as e:
             e.args
