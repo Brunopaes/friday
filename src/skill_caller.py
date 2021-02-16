@@ -95,6 +95,7 @@ def return_coke(message):
     coke_functions = {
         'add': coke.insert_coke,
         'check': coke.aggregate,
+        'reset': coke.reset,
         'drop': coke.drop
     }
 

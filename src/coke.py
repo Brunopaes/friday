@@ -180,6 +180,33 @@ def aggregate(message):
             return 'Impossible, perhaps the archives are incomplete!'
 
 
+def reset(message):
+    """Function to reset all coke ingested by a user.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg: success message.
+
+    """
+    helpers.set_path()
+    client = helpers.start_connection()
+
+    client.query("""
+    DELETE
+    FROM
+        `mooncake-304003.DS_Bruno.coca-cola`
+    WHERE
+        USER_ID = {}
+        """.format(message.from_user.id))
+
+    return 'Statistics successfully reset!'
+
+
 def drop(message):
     """Meme function - someday will be used to drop register in coke database.
 
