@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from bottle import run
-
 import skill_caller
 import telebot
 import json
@@ -59,4 +57,4 @@ def message_handler(message):
         e.args
 
 
-run(bot.polling(none_stop=True), host='localhost', port=8000)
+bot.polling()
