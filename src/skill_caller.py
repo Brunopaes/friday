@@ -116,4 +116,19 @@ def return_btc(message):
         The BTC api return (buy and sell prices).
 
     """
-    return btc.BTCoin().__call__()
+    def price(nested_message):
+        return btc.BTCoin().__call__()
+
+    def fees(nested_message):
+        return btc.Fees(nested_message).__call__()
+
+    def trade(nested_message):
+        return btc.Trade(nested_message).__call__()
+
+    msg_ = message.text.lower().split(' ')
+    btc_functions = {
+        'price': price,
+        'fees': fees,
+        'trade': trade
+    }
+    return btc_functions.get(msg_[1])(message)

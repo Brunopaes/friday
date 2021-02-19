@@ -12,12 +12,12 @@ functions = {
     'this is the way': skill_caller.return_mando,
     'ponto': skill_caller.return_punch_a_clock,
     'eta': skill_caller.return_eta,
-    'btc': skill_caller.return_btc
 }
 
 arg_functions = {
     'morse': skill_caller.return_morse,
-    'coke': skill_caller.return_coke
+    'coke': skill_caller.return_coke,
+    'btc': skill_caller.return_btc
 }
 
 
