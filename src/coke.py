@@ -33,7 +33,7 @@ def insert_coke(message):
 
     client.query("""
     INSERT INTO
-        `mooncake-304003.DS_Bruno.coca-cola` 
+        `mooncake-304003.misc.coca-cola` 
     VALUES
         ({}, CURRENT_DATETIME("America/Sao_Paulo"), {}, "{}")
     """.format(value, user_id, username))
@@ -67,7 +67,7 @@ def aggregate(message):
                 "-", EXTRACT(MONTH FROM DATETIME),
                  "-", EXTRACT(DAY FROM DATETIME)) AS SAFRA
             FROM
-                `mooncake-304003.DS_Bruno.coca-cola`
+                `mooncake-304003.misc.coca-cola`
             WHERE
                 USER_ID = {}
             GROUP BY
@@ -84,7 +84,7 @@ def aggregate(message):
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(WEEK FROM DATETIME)) AS SAFRA
             FROM
-                `mooncake-304003.DS_Bruno.coca-cola`
+                `mooncake-304003.misc.coca-cola`
             WHERE
                 USER_ID = {}
             GROUP BY
@@ -101,7 +101,7 @@ def aggregate(message):
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(MONTH FROM DATETIME)) AS SAFRA
             FROM
-                `mooncake-304003.DS_Bruno.coca-cola`
+                `mooncake-304003.misc.coca-cola`
             WHERE
                 USER_ID = {}
             GROUP BY
@@ -118,7 +118,7 @@ def aggregate(message):
                 CONCAT(EXTRACT(YEAR FROM DATETIME), 
                 "-", EXTRACT(QUARTER FROM DATETIME)) AS SAFRA
             FROM
-                `mooncake-304003.DS_Bruno.coca-cola`
+                `mooncake-304003.misc.coca-cola`
             WHERE
                 USER_ID = {}
             GROUP BY
@@ -134,7 +134,7 @@ def aggregate(message):
                 MIN(DATETIME) AS DATETIME,
                 CONCAT(EXTRACT(YEAR FROM DATETIME)) AS SAFRA
             FROM
-                `mooncake-304003.DS_Bruno.coca-cola`
+                `mooncake-304003.misc.coca-cola`
             WHERE
                 USER_ID = {}
             GROUP BY
@@ -148,7 +148,7 @@ def aggregate(message):
                 USERNAME,
                 SUM(MILLILITERS) AS SUMMARY
             FROM
-                `mooncake-304003.DS_Bruno.coca-cola`
+                `mooncake-304003.misc.coca-cola`
             GROUP BY
                 USERNAME
             ORDER BY
@@ -199,7 +199,7 @@ def reset(message):
     client.query("""
     DELETE
     FROM
-        `mooncake-304003.DS_Bruno.coca-cola`
+        `mooncake-304003.misc.coca-cola`
     WHERE
         USER_ID = {}
         """.format(message.from_user.id))
