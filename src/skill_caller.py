@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import punch_a_clock
+import stock_alerts
 import helpers
 import mando
 import morse
@@ -132,3 +133,41 @@ def return_btc(message):
         'trade': trade
     }
     return btc_functions.get(msg_[1])(message)
+
+
+def return_tweet(message):
+    """Middle function for calling tweet package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Tweet url.
+
+    """
+    return stock_alerts.PS5StockAlerts().__call__()
+
+
+def return_user_alert(message):
+    """Middle function for calling user alert package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        User/Chat alert list addition/removal.
+
+    """
+    functions = {
+        'add me': stock_alerts.add_me,
+        'drop me': stock_alerts.drop_me,
+    }
+    return functions.get(message.text.lower())(message)

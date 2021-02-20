@@ -4,5 +4,6 @@ pytesseract>=0.3.6
 selenium>=3.141.0
 requests>=2.24.0
 bottle>=0.12.18
+tweepy>=3.10.0
 Pillow>=7.2.0
 numpy>=1.19.1

@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
 ````json
 {
-  "API_TOKEN": "A12JASBN12JASIJDW12321KN"
+  "token": "A12JASBN12JASIJDW12321KN"
 }
 ````
 

@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 import skill_caller
+import helpers
 import telebot
-import json
 
 
-API_TOKEN = json.loads(open('settings.json', 'r').read())['API_TOKEN']
-
-bot = telebot.TeleBot(API_TOKEN)
+bot = telebot.TeleBot(**helpers.read_json('settings.json'))
 
 functions = {
     'this is the way': skill_caller.return_mando,
     'ponto': skill_caller.return_punch_a_clock,
     'eta': skill_caller.return_eta,
+    'ps5': skill_caller.return_tweet,
+    'add me': skill_caller.return_user_alert,
+    'drop me': skill_caller.return_user_alert,
 }
 
 arg_functions = {
