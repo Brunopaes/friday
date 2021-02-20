@@ -14,6 +14,7 @@ class PS5StockAlerts:
 
 		self.verbose = verbose
 
+	# Used in __init__
 	def authenticate(self):
 		"""This function authenticates into twitter.
 
@@ -28,6 +29,7 @@ class PS5StockAlerts:
 
 		return auth
 
+	# Used in __call__
 	def retrieve_tweets(self):
 		"""This function retrieves the - latest - tweets from a given user.
 
@@ -43,6 +45,7 @@ class PS5StockAlerts:
 			tweet_mode='extended'
 		)[0]
 
+	# Used in __call__
 	@staticmethod
 	def seek_and_destroy(tweet, verbose):
 		"""This function seeks for "Playstation 5 In Stock NOW"
