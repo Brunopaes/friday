@@ -79,7 +79,7 @@ class Fees:
         self.operation = self.message_text[2]
         self.query = """
             UPDATE
-                `mooncake-304003.DS_Bruno.btc-fees`
+                `mooncake-304003.trading.btc-fees`
             SET
                 BOTTOM_FEE = {},
                 TOP_FEE = {}
@@ -172,7 +172,7 @@ class Trade:
 
         self.query = """
             INSERT INTO 
-                `mooncake-304003.DS_Bruno.btc-trade` 
+                `mooncake-304003.trading.btc-trade` 
             VALUES 
                 ({}, "{}", {}, CURRENT_DATETIME("America/Sao_Paulo"))
         """
