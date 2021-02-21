@@ -13,7 +13,8 @@ class NexusRPA:
             r'D:\PythonProjects\Personal\python-sandbox\drivers'
             r'\chromedriver.exe'
         )
-        self.credentials = helpers.read_json('credentials.json')
+        self.credentials = \
+            helpers.read_json('settings/punch_a_clock_settings.json')
         self.url = 'https://banco_abc.nexusweb.com.br/'
         self.alert = None
 

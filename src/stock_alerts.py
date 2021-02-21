@@ -5,7 +5,7 @@ import tweepy
 
 class PS5StockAlerts:
 	def __init__(self, user='PS5StockAlerts', limit=1, verbose=True):
-		self.credentials = helpers.read_json('ps_alert.json')
+		self.credentials = helpers.read_json('settings/ps_settings.json')
 
 		self.api = tweepy.API(self.authenticate())
 

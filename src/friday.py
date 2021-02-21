@@ -4,7 +4,10 @@ import helpers
 import telebot
 
 
-bot = telebot.TeleBot(**helpers.read_json('settings.json'))
+friday = telebot.TeleBot(
+    **helpers.read_json('settings/telegram_settings.json')
+)
+
 
 functions = {
     'this is the way': skill_caller.return_mando,
@@ -22,7 +25,7 @@ arg_functions = {
 }
 
 
-@bot.message_handler(func=lambda message: True)
+@friday.message_handler(func=lambda message: True)
 def message_handler(message):
     """This function gets the incoming message and calls the respective skill.
 
@@ -35,18 +38,18 @@ def message_handler(message):
     msg = message.text.lower().split(' ')
     try:
         if len(message.text.split(' ')) > 1:
-            bot.send_message(
+            friday.send_message(
                 message.chat.id,
                 arg_functions.get(msg[0])(message)
             )
         else:
-            bot.send_message(
+            friday.send_message(
                 message.chat.id,
                 functions.get(msg[0])(message)
             )
     except TypeError:
         try:
-            bot.send_message(
+            friday.send_message(
                 message.chat.id,
                 functions.get(' '.join(msg))(message)
             )
@@ -58,4 +61,4 @@ def message_handler(message):
         e.args
 
 
-bot.polling()
+friday.polling()

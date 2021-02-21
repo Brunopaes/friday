@@ -1,5 +1,5 @@
 __all__ = [
-    'telegram_replier',
+    'friday',
     'punch_a_clock',
     'helpers',
     'eta',

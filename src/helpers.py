@@ -133,13 +133,13 @@ def crop_image(path, coordinates):
 
 
 def set_path():
-    """This function sets settings.json in PATH.
+    """This function sets gcp_settings.json in PATH.
 
     Returns
     -------
 
     """
-    path = os.path.abspath('gcp-credentials.json')
+    path = os.path.abspath('settings/gcp_settings.json')
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = path
 
 
@@ -159,7 +159,7 @@ def check_user(user):
     Parameters
     ----------
     user : int
-        User credentials.
+        User id.
 
     Returns
     -------
