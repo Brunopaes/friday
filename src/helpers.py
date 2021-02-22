@@ -3,6 +3,7 @@ from google.cloud import bigquery
 from PIL import Image
 
 import pytesseract
+import telebot
 import numpy
 import json
 import cv2
@@ -167,3 +168,21 @@ def check_user(user):
     """
     if user != 144068478:
         raise AttributeError
+
+
+def courier(message, chat_id=-555674635):
+    """This function courier - through telegram bot - a message.
+
+    Parameters
+    ----------
+    message : str
+        To be couriered message.
+    chat_id : int
+        To be messaged chat id.
+
+    Returns
+    -------
+
+    """
+    telebot.TeleBot(**read_json('settings/telegram_settings.json'))\
+        .send_message(chat_id, message)

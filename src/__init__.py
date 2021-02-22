@@ -8,7 +8,8 @@ __all__ = [
     'skill_caller',
     'coke',
     'btc',
-    'stock_alerts'
+    'stock_alerts',
+    'reddit_searcher'
 ]
 
 from . import __all__

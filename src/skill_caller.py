@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import reddit_searcher
 import punch_a_clock
 import stock_alerts
 import helpers
@@ -171,3 +172,20 @@ def return_user_alert(message):
         'drop me': stock_alerts.drop_me,
     }
     return functions.get(message.text.lower())(message)
+
+
+def return_reddit(message):
+    """Middle function for calling reddit package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        User/Chat alert list addition/removal.
+
+    """
+    return reddit_searcher.Reddit(message.text.split('/')[-1]).__call__()

@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
 import helpers
 
+import requests
+import random
 import praw
-import os
+import PIL
+import io
 
 
-class Bot:
+class Reddit:
     def __init__(self, subreddit):
         self.subreddit = subreddit
         self.reddit = self.authenticate()
+        self.posts = []
+
+        self.image = None
 
     # used in __init__
     @staticmethod
@@ -23,19 +29,59 @@ class Bot:
 
     # used in __call__
     def monitor(self):
-        """This function monitor the whitelisted subreddits seeking for new
-        posts.
+        """This function extracts some random media posts from a given r/.
 
         Returns
         -------
 
         """
-        for submission in self.reddit.subreddit(self.subreddit).hot(limit=10):
-            print(submission.url)
+        for submission in self.reddit.subreddit(self.subreddit).hot():
+            if submission.is_self is False:
+                self.posts.append(submission.url)
+
+    # used in __call__
+    def requesting(self):
+        """This function requests into a given media url.
+
+        Returns
+        -------
+        response : generator
+            Generator package containing media bytes and filename.
+
+        """
+        tries = 0
+        while tries < 10:
+            try:
+                chosen_one = random.choice(self.posts)
+            except IndexError:
+                break
+
+            if any([i in chosen_one for i in ['jpg', 'png']]):
+                return requests.get(chosen_one).content
+
+            tries += 1
+        return 'Impossible, perhaps the archives are incomplete!'
+
+    def parsing_image(self, response):
+        """This function parses image responses (jpeg and png).
+
+        Parameters
+        ----------
+        response : generator
+            Generator package containing media bytes.
+        Returns
+        -------
+
+        """
+        self.image = response if isinstance(response[0], str) \
+            else PIL.Image.open(io.BytesIO(response))
 
     def __call__(self, *args, **kwargs):
         self.monitor()
+        self.parsing_image(self.requesting())
+
+        return self.image
 
 
 if __name__ == '__main__':
-    Bot('wtsstadamit').__call__()
+    helpers.courier(Reddit('playboy').__call__(), 144068478)
