@@ -35,9 +35,12 @@ class Reddit:
         -------
 
         """
-        for submission in self.reddit.subreddit(self.subreddit).hot():
-            if submission.is_self is False:
-                self.posts.append(submission.url)
+        try:
+            for submission in self.reddit.subreddit(self.subreddit).hot():
+                if submission.is_self is False:
+                    self.posts.append(submission.url)
+        except Exception as e:
+            e.args
 
     # used in __call__
     def requesting(self):

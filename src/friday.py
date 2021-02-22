@@ -79,4 +79,8 @@ def message_handler(message):
         e.args
 
 
-friday.polling()
+while True:
+    try:
+        friday.polling()
+    except Exception as error:
+        error.args
