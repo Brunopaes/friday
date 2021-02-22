@@ -1,9 +1,9 @@
-## Friday - Personal Assistant
+## Friday: Female Replacement Intelligent Digital Assistant Youth
 
-<small>_Optimized for python 3.6+_</small>
+<small>_Optimized for python 3.8+_</small>
 
 This project is aimed on creating a telegram personal assistant for replying
- messages and automating daily tasks by using specific ```/commands```.
+ messages and automating daily tasks by using specific ```commands```.
 
 ------------------------------
 
@@ -27,6 +27,8 @@ This project is aimed on creating a telegram personal assistant for replying
     │   │   ├── helpers.py
     │   │   ├── vega_fitting.py
     │   │   └── vega_preditcting.py
+    │   ├── settings
+    │   │   └── settings.json
     │   ├── __init__.py
     │   ├── settings.json
     │   └── telegram_replier.py
@@ -63,21 +65,57 @@ python telegram_replier.py
 
 or, if importing it as a module, just run:
 ````python
-from telegram_replier import message_handler
+from friday import message_handler
 
 if __name__ == '__main__':
     message_handler('args', 'kwargs')
 ````
 
-### JSON structure
+### Settings
 
+- ``telegram_settings.json``:
 ````json
 {
-  "token": "A12JASBN12JASIJDW12321KN"
+  "token": "541233:A12JASBN12JASIJDW12321KN"
 }
 ````
 
-_obs: in order to run this application you must have a json file at 
-`~/src/settings.json`. This json must follow the structure above._
+- `gcp-settings.json`
+````json
+{
+  "type": "service_account",
+  "project_id": "sdnasjdn923",
+  "private_key_id": "2193undasidhuh1287ebdu2he2e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n",
+  "client_email": "wawaweewa@wawaweewa-545459.iam.gserviceaccount.com",
+  "client_id": "65649498411548484",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bruno-paes%40mooncake-304003.iam.gserviceaccount.com"
+}
+````
+
+- `ps_settings.json`
+````json
+{
+  "consumer": {
+    "consumer_key": "n2133n21j3nj12ndnasjnd",
+    "consumer_secret": "3u21h3unbdsajndsajnd821n2jndcawsdwd21e12"
+  },
+  "application": {
+    "key": "knduh12873bd217ge721db217eg271d217ge81db218",
+    "secret": "d12b217gd821gdu2b128ge8gdu9128dy"
+  }
+}
+````
+
+- `punch_a_clock.json`
+````json
+{
+  "cpf": "64454554845",
+  "token": "948484545488454554"
+}
+````
 
 ---------------
