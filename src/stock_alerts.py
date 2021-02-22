@@ -87,12 +87,13 @@ def add_me(message):
 
 	"""
 	helpers.set_path()
-	helpers.start_connection().query("""
+	helpers.start_connection().query(f"""
 		INSERT INTO
 			`mooncake-304003.misc.ps5-stock`
 		VALUES 
-			({})
-	""".format(message.chat.id))
+			({message.chat.id}, "{message.chat.title if 
+	message.chat.title is not None else message.from_user.username}")
+	""")
 
 	return 'User/chat added to PS5 alert list!'
 
