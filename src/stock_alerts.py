@@ -89,7 +89,7 @@ def add_me(message):
 	helpers.set_path()
 	helpers.start_connection().query(f"""
 		INSERT INTO
-			`mooncake-304003.misc.ps5-stock`
+			`mooncake-304003.misc.ps5-broadcast-list`
 		VALUES 
 			({message.chat.id}, "{message.chat.title if 
 	message.chat.title is not None else message.from_user.username}")
@@ -115,7 +115,7 @@ def drop_me(message):
 	helpers.set_path()
 	helpers.start_connection().query("""
 		DELETE FROM
-			`mooncake-304003.misc.ps5-stock`
+			`mooncake-304003.misc.ps5-broadcast-list`
 		WHERE
 			CHAT_ID = {}
 	""".format(message.chat.id))

@@ -270,4 +270,4 @@ class Trade:
 
     def __call__(self, *args, **kwargs):
         self.querying()
-        return 'Prices were successfully updated!'
+        return 'Purchase price successfully registered!'
