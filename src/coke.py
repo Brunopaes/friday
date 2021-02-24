@@ -22,7 +22,6 @@ def insert_coke(message):
     except ValueError:
         return 'Cannot add non-numeric values!'
 
-    helpers.set_path()
     client = helpers.start_connection()
 
     user_id = message.from_user.id
@@ -54,7 +53,6 @@ def aggregate(message):
     msg: Query result - to be displayed at Telegram's chat.
 
     """
-    helpers.set_path()
     client = helpers.start_connection()
 
     query_dict = {
@@ -193,7 +191,6 @@ def reset(message):
     msg: success message.
 
     """
-    helpers.set_path()
     client = helpers.start_connection()
 
     client.query("""

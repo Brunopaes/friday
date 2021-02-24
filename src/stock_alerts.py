@@ -86,7 +86,6 @@ def add_me(message):
 		User/Chat alert list addition/removal.
 
 	"""
-	helpers.set_path()
 	helpers.start_connection().query(f"""
 		INSERT INTO
 			`mooncake-304003.misc.ps5-broadcast-list`
@@ -112,7 +111,6 @@ def drop_me(message):
 		User/Chat alert list addition/removal.
 
 	"""
-	helpers.set_path()
 	helpers.start_connection().query("""
 		DELETE FROM
 			`mooncake-304003.misc.ps5-broadcast-list`

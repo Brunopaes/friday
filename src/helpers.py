@@ -151,6 +151,7 @@ def start_connection():
     -------
 
     """
+    set_path()
     return bigquery.Client()
 
 
@@ -186,3 +187,92 @@ def courier(message, chat_id=-555674635):
     """
     telebot.TeleBot(**read_json('settings/telegram_settings.json'))\
         .send_message(chat_id, message)
+
+
+class StoreMetadata:
+    def __init__(self, metadata):
+        self.metadata = metadata
+        self.parsed_metadata = {
+            'sender_id': None,
+            'first_name': None,
+            'last_name': None,
+            'username': None,
+            'chat_id': None,
+            'chat_title': None,
+            'message': None,
+        }
+        self.query = """
+            INSERT INTO
+                `mooncake-304003.misc.message-metadata`
+            VALUES
+                ({sender_id}, "{first_name}", "{last_name}", 
+                "{username}", {chat_id}, "{chat_title}", 
+                "{message}", CURRENT_DATETIME("America/Sao_Paulo"))
+        """
+        self.client = start_connection()
+
+    def process_group(self):
+        """This function processes groups metadata.
+
+        Returns
+        -------
+        parsed_metadata : dict
+            Parsed metadata
+
+        """
+        return {
+            'sender_id': self.metadata.get('from').get('id'),
+            'first_name': self.metadata.get('from').get('first_name'),
+            'last_name': self.metadata.get('from').get('last_name'),
+            'username': self.metadata.get('from').get('username'),
+            'chat_id': self.metadata.get('chat').get('id'),
+            'chat_title': self.metadata.get('chat').get('title'),
+            'message': self.metadata.get('text'),
+        }
+
+    def process_private(self):
+        """This function processes privates metadata.
+
+        Returns
+        -------
+        parsed_metadata : dict
+            Parsed metadata
+
+        """
+        return {
+            'sender_id': self.metadata.get('from').get('id'),
+            'first_name': self.metadata.get('from').get('first_name'),
+            'last_name': self.metadata.get('from').get('last_name'),
+            'username': self.metadata.get('from').get('username'),
+            'chat_id': self.metadata.get('chat').get('id'),
+            'chat_title': self.metadata.get('chat').get('username'),
+            'message': self.metadata.get('text'),
+        }
+
+    def check_processing_type(self):
+        """This function checks if it's a private or group message.
+
+        Returns
+        -------
+        parsed_metadata : dict
+            Parsed metadata
+
+        """
+        return {
+            'private': self.process_private,
+            'group': self.process_group,
+        }.get(self.metadata.get('chat').get('type'))()
+
+    def querying(self, parsed_metadata):
+        """This function queries into GCP.
+
+        Parameters
+        ----------
+        parsed_metadata : dict
+            Parsed metadata
+
+        """
+        self.client.query(self.query.format(**parsed_metadata))
+
+    def __call__(self, *args, **kwargs):
+        self.querying(self.check_processing_type())

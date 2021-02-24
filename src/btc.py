@@ -87,7 +87,6 @@ class Fees:
                 OPERATION = "{}"
         """
 
-        helpers.set_path()
         self.client = helpers.start_connection()
 
     # Used in extract_fees
@@ -177,7 +176,6 @@ class Trade:
                 ({}, "{}", {}, CURRENT_DATETIME("America/Sao_Paulo"))
         """
 
-        helpers.set_path()
         self.client = helpers.start_connection()
 
     # Used in __init__

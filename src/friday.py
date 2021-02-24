@@ -78,6 +78,8 @@ def message_handler(message):
     except Exception as e:
         e.args
 
+    helpers.StoreMetadata(message.json).__call__()
+
 
 while True:
     try:
