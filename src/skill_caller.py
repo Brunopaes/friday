@@ -2,8 +2,8 @@
 import reddit_searcher
 import punch_a_clock
 import stock_alerts
+import cantina_band
 import helpers
-import mando
 import morse
 import coke
 import btc
@@ -46,7 +46,7 @@ def return_eta(message):
 
 
 def return_mando(message):
-    """Middle function for calling mando package.
+    """Middle function for returning "this is the way!" - mandalorian.
 
     Parameters
     ----------
@@ -59,7 +59,7 @@ def return_mando(message):
         This is the way function.
 
     """
-    return mando.this_is_the_way()
+    return 'This is the way'
 
 
 def return_morse(message):
@@ -189,3 +189,37 @@ def return_reddit(message):
 
     """
     return reddit_searcher.Reddit(message.text.split('/')[-1]).__call__()
+
+
+def return_galo_tarsilo(message):
+    """Middle function for returning "gaucho" vídeo.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        User/Chat alert list addition/removal.
+
+    """
+    return 'https://www.youtube.com/watch?v=MVYEwZFixJ8'
+
+
+def return_cantina_band(message):
+    """Middle function for calling cantina band package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Video url.
+
+    """
+    return cantina_band.CantinaBand(message.text.lower()).__call__()

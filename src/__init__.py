@@ -4,12 +4,12 @@ __all__ = [
     'helpers',
     'eta',
     'morse',
-    'mando',
     'skill_caller',
     'coke',
     'btc',
     'stock_alerts',
-    'reddit_searcher'
+    'reddit_searcher',
+    'cantina_band'
 ]
 
 from . import __all__

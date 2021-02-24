@@ -16,16 +16,18 @@ functions = {
     'ps5': skill_caller.return_tweet,
     'add me': skill_caller.return_user_alert,
     'drop me': skill_caller.return_user_alert,
+    'va se foder': skill_caller.return_galo_tarsilo,
 }
 
 arg_functions = {
     'morse': skill_caller.return_morse,
     'coke': skill_caller.return_coke,
-    'btc': skill_caller.return_btc
+    'btc': skill_caller.return_btc,
+    'porn': skill_caller.return_cantina_band,
 }
 
 media_functions = {
-    'r/': skill_caller.return_reddit
+    'r/': skill_caller.return_reddit,
 }
 
 
@@ -65,6 +67,7 @@ def message_handler(message):
                         'r/' if msg[0].startswith('r/') else msg[0]
                     )(message),
                     caption='Random submission form {}'.format(msg[0])
+                    if msg[0].startswith('/r') else ''
                 )
             except telebot.apihelper.ApiException:
                 friday.send_message(
