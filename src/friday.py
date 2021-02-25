@@ -17,6 +17,7 @@ functions = {
     'add me': skill_caller.return_user_alert,
     'drop me': skill_caller.return_user_alert,
     'va se foder': skill_caller.return_galo_tarsilo,
+    'porn': skill_caller.return_cantina_band,
 }
 
 arg_functions = {

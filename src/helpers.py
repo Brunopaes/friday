@@ -171,7 +171,7 @@ def check_user(user):
         raise AttributeError
 
 
-def courier(message, chat_id=-555674635):
+def courier(message, chat_id=-1001164675059):
     """This function courier - through telegram bot - a message.
 
     Parameters
@@ -261,6 +261,7 @@ class StoreMetadata:
         return {
             'private': self.process_private,
             'group': self.process_group,
+            'supergroup': self.process_group,
         }.get(self.metadata.get('chat').get('type'))()
 
     def querying(self, parsed_metadata):
