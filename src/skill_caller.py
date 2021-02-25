@@ -6,6 +6,7 @@ import cantina_band
 import helpers
 import morse
 import coke
+import wiki
 import btc
 import eta
 
@@ -223,3 +224,20 @@ def return_cantina_band(message):
 
     """
     return cantina_band.CantinaBand(message.text.lower()).__call__()
+
+
+def return_wiki(message):
+    """Middle function for calling wiki package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Video url.
+
+    """
+    return wiki.wiki(message.text.lower().split(' '))

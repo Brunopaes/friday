@@ -25,6 +25,7 @@ arg_functions = {
     'coke': skill_caller.return_coke,
     'btc': skill_caller.return_btc,
     'porn': skill_caller.return_cantina_band,
+    'wiki': skill_caller.return_wiki,
 }
 
 media_functions = {
