@@ -26,6 +26,9 @@ arg_functions = {
     'btc': skill_caller.return_btc,
     'porn': skill_caller.return_cantina_band,
     'wiki': skill_caller.return_wiki,
+    'ping': skill_caller.return_geocoding,
+    'pong': skill_caller.return_geodecoding,
+    'ml': skill_caller.return_meli,
 }
 
 media_functions = {

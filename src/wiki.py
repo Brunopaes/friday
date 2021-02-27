@@ -16,6 +16,13 @@ def wiki(message_text):
         The wikipedia page summary and url.
 
     """
+    verbose = False
+    if message_text[1] in (
+            'en', 'pt', 'fr', 'de', 'ru', 'es', 'zh',
+            'ja', 'ko', 'it', 'uk', 'sv', 'nl', 'pl'
+    ):
+        verbose = True
+
     wikipedia.set_lang(
         message_text[1] if message_text[1] in (
             'en', 'pt', 'fr', 'de', 'ru', 'es', 'zh',
@@ -24,8 +31,12 @@ def wiki(message_text):
     )
 
     try:
-        response = \
-            wikipedia.page(wikipedia.search(' '.join(message_text[1:]))[0])
+        if verbose:
+            response = \
+                wikipedia.page(wikipedia.search(' '.join(message_text[2:]))[0])
+        else:
+            response = \
+                wikipedia.page(wikipedia.search(' '.join(message_text[1:]))[0])
     except wikipedia.exceptions.DisambiguationError:
         return 'Impossible, perhaps the archives are incomplete!'
     except Exception as e:

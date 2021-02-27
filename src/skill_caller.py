@@ -6,6 +6,8 @@ import cantina_band
 import helpers
 import morse
 import coke
+import maps
+import meli
 import wiki
 import btc
 import eta
@@ -241,3 +243,54 @@ def return_wiki(message):
 
     """
     return wiki.wiki(message.text.lower().split(' '))
+
+
+def return_geocoding(message):
+    """Middle function for calling geocoding package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Video url.
+
+    """
+    return maps.geocoding(' '.join(message.text.lower().split(' ')[1:]))
+
+
+def return_geodecoding(message):
+    """Middle function for calling geodecoding package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Video url.
+
+    """
+    return maps.geodecoding(message.text.lower().split(' ')[1:])
+
+
+def return_meli(message):
+    """Middle function for calling mercado livre package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Video url.
+
+    """
+    return meli.meli(message.text.lower().split(' '))

@@ -3,6 +3,7 @@ opencv-python>=4.4.0.42
 pornhub-api>=0.2.0
 pytesseract>=0.3.6
 selenium>=3.141.0
+googlemaps>=4.4.2
 requests>=2.24.0
 wikipedia>=1.4.0
 bottle>=0.12.18
