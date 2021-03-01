@@ -46,33 +46,33 @@ def message_handler(message):
         The message object.
 
     """
-    msg = message.text.lower().split(' ')
+    message_text = message.text.lower().split(' ')
     try:
         if len(message.text.split(' ')) > 1:
             friday.send_message(
                 message.chat.id,
-                arg_functions.get(msg[0])(message)
+                arg_functions.get(message_text[0])(message)
             )
         else:
             friday.send_message(
                 message.chat.id,
-                functions.get(msg[0])(message)
+                functions.get(message_text[0])(message)
             )
     except TypeError:
         try:
             friday.send_message(
                 message.chat.id,
-                functions.get(' '.join(msg))(message)
+                functions.get(' '.join(message_text))(message)
             )
         except TypeError:
             try:
                 friday.send_photo(
                     message.chat.id,
                     media_functions.get(
-                        'r/' if msg[0].startswith('r/') else msg[0]
+                        'r/' if message_text[0].startswith('r/') else message_text[0]
                     )(message),
-                    caption='Random submission form {}'.format(msg[0])
-                    if msg[0].startswith('/r') else ''
+                    caption='Random submission form {}'.format(message_text[0])
+                    if message_text[0].startswith('/r') else ''
                 )
             except telebot.apihelper.ApiException:
                 friday.send_message(
