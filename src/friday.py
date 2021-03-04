@@ -69,7 +69,8 @@ def message_handler(message):
                 friday.send_photo(
                     message.chat.id,
                     media_functions.get(
-                        'r/' if message_text[0].startswith('r/') else message_text[0]
+                        'r/' if message_text[0].startswith('r/')
+                        else message_text[0]
                     )(message),
                     caption='Random submission form {}'.format(message_text[0])
                     if message_text[0].startswith('/r') else ''
