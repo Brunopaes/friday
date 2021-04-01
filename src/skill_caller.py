@@ -3,8 +3,10 @@ import reddit_searcher
 import punch_a_clock
 import stock_alerts
 import cantina_band
+import jagshemash
 import helpers
 import morse
+import numpy
 import coke
 import maps
 import meli
@@ -225,7 +227,12 @@ def return_cantina_band(message):
         Video url.
 
     """
-    return cantina_band.CantinaBand(message.text.lower()).__call__()
+    return {
+        'porn': cantina_band.CantinaBand(message.text.lower()),
+        'bible': jagshemash.Jagshemash()
+    }.get(numpy.random.choice(
+        ['porn', 'bible'], 1, p=[0.85, 0.15]
+    )[-1]).__call__()
 
 
 def return_wiki(message):
