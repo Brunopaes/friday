@@ -235,6 +235,28 @@ def return_cantina_band(message):
     )[-1]).__call__()
 
 
+def return_jagshemash(message):
+    """Middle function for calling jagshemash package.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Video url.
+
+    """
+    return {
+        'porn': cantina_band.CantinaBand(message.text.lower()),
+        'bible': jagshemash.Jagshemash()
+    }.get(numpy.random.choice(
+        ['porn', 'bible'], 1, p=[0.15, 0.85]
+    )[-1]).__call__()
+
+
 def return_wiki(message):
     """Middle function for calling wiki package.
 
