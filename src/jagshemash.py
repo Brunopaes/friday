@@ -6,9 +6,8 @@ import ast
 class Jagshemash:
     def __init__(self):
         self.url = 'https://www.abibliadigital.com.br/api/verses/nvi/random'
-        self.versicle = self.requesting()
 
-    # Used in __init__
+    # Used in __call__
     def requesting(self):
         """This function requests into bible api.
 
@@ -55,4 +54,4 @@ class Jagshemash:
         )
 
     def __call__(self, *args, **kwargs):
-        return self.versicle
+        return self.requesting()
