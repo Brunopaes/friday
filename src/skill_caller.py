@@ -231,7 +231,7 @@ def return_cantina_band(message):
         'porn': cantina_band.CantinaBand(message.text.lower()),
         'bible': jagshemash.Jagshemash()
     }.get(numpy.random.choice(
-        ['porn', 'bible'], 1, p=[0.85, 0.15]
+        ['porn', 'bible'], 1, p=[0.9, 0.1]
     )[-1]).__call__()
 
 
@@ -250,10 +250,10 @@ def return_jagshemash(message):
 
     """
     return {
-        'porn': cantina_band.CantinaBand(message.text.lower()),
+        'porn': cantina_band.CantinaBand('porn nun'),
         'bible': jagshemash.Jagshemash()
     }.get(numpy.random.choice(
-        ['porn', 'bible'], 1, p=[0.15, 0.85]
+        ['porn', 'bible'], 1, p=[0.1, 0.9]
     )[-1]).__call__()
 
 
