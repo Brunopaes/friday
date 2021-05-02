@@ -1,3 +1,4 @@
+google-cloud-bigquery>=2.15.0
 pyTelegramBotAPI>=3.7.2
 opencv-python>=4.4.0.42
 pornhub-api>=0.2.0

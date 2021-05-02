@@ -80,7 +80,7 @@ if __name__ == '__main__':
 }
 ````
 
-- `gcp-settings.json`
+- `gcp_settings.json`
 ````json
 {
   "type": "service_account",
@@ -93,6 +93,13 @@ if __name__ == '__main__':
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/"
+}
+````
+
+- `maps_settings.json`
+````json
+{
+  "api_key": "AIzaSyDx2RCq2og6zp5aYbnProvMjCWletM03B0"
 }
 ````
 

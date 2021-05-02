@@ -2,8 +2,8 @@
 setlocal EnableExtensions
 
 :start_python_files
-D:
-cd D:\PythonProjects\Personal\friday\src
+E:
+cd E:\PythonProjects\Personal\friday\src
 
 python friday.py
 
