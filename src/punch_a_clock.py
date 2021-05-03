@@ -10,7 +10,7 @@ import time
 class NexusRPA:
     def __init__(self):
         self.driver = webdriver.Chrome(
-            r'D:\PythonProjects\Personal\friday\data\webdriver'
+            r'E:\PythonProjects\Personal\friday\data\webdriver'
             r'\chromedriver.exe'
         )
         self.credentials = \
