@@ -67,17 +67,15 @@ def message_handler(message):
             )
         except TypeError:
             try:
-                for elem in media_functions.get(
+                friday.send_photo(
+                    message.chat.id,
+                    media_functions.get(
                         'r/' if message_text[0].startswith('r/')
                         else message_text[0]
-                )(message):
-                    friday.send_photo(
-                        message.chat.id,
-                        elem,
-                        caption='Random submission form {}'.format(
-                            message_text[0]
-                        ) if message_text[0].startswith('r/') else ''
-                    )
+                    )(message),
+                    caption='Random submission form {}'.format(message_text[0])
+                    if message_text[0].startswith('r/') else ''
+                )
             except telebot.apihelper.ApiException:
                 friday.send_message(
                     message.chat.id,
