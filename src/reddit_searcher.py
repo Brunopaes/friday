@@ -9,8 +9,8 @@ import io
 
 
 class Reddit:
-    def __init__(self, subreddit):
-        self.subreddit = subreddit
+    def __init__(self, arguments):
+        self.subreddit, self.limit = self.parsing_arguments(arguments.split())
         self.reddit = self.authenticate()
         self.posts = []
 
@@ -18,10 +18,20 @@ class Reddit:
 
     # used in __init__
     @staticmethod
+    def parsing_arguments(arguments):
+        try:
+            return arguments[0], int(arguments[-1])
+        except ValueError:
+            return arguments[0], 1
+
+    # used in __init__
+    @staticmethod
     def authenticate():
         """This function logs in some reddit´s account.
+
         Returns
         -------
+
         """
         return praw.Reddit(
             **helpers.read_json('settings/reddit_settings.json')
@@ -80,11 +90,10 @@ class Reddit:
             else PIL.Image.open(io.BytesIO(response))
 
     def __call__(self, *args, **kwargs):
-        self.monitor()
-        self.parsing_image(self.requesting())
+        image_list = []
+        for i in range(self.limit):
+            self.monitor()
+            self.parsing_image(self.requesting())
 
-        return self.image
-
-
-if __name__ == '__main__':
-    helpers.courier(Reddit('playboy').__call__(), 144068478)
+            image_list.append(self.image)
+        return image_list
