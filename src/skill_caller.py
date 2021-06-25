@@ -193,8 +193,9 @@ def return_reddit(message):
         User/Chat alert list addition/removal.
 
     """
-    if message.text not in ('r/guro',):
-        return reddit_searcher.Reddit(message.text.split('/')[-1]).__call__()
+    if message.text in ('r/guro',):
+        message.text = 'r/corgi'
+    return reddit_searcher.Reddit(message.text.split('/')[-1]).__call__()
 
 
 def return_galo_tarsilo(message):
