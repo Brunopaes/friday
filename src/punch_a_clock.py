@@ -1,5 +1,6 @@
 #!-*- coding: utf8 -*-
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.by import By
 from selenium.common import exceptions
 from selenium import webdriver
 
@@ -27,6 +28,7 @@ class NexusRPA:
 
         """
         self.driver.get(self.url)
+        time.sleep(3)
         self.driver.fullscreen_window()
 
     # Used in __call__
@@ -38,27 +40,31 @@ class NexusRPA:
 
         """
         Select(
-            self.driver.find_element_by_xpath('//*[@id="cboCampo"]')
+            self.driver.find_element(By.XPATH, '//*[@id="cboCampo"]')
         ).select_by_index(2)
 
-        cpf = self.driver.find_element_by_xpath('//*[@id="txtValor"]')
+        cpf = self.driver.find_element(By.XPATH, '//*[@id="txtValor"]')
         cpf.clear()
         cpf.send_keys(self.credentials.get('cpf'))
 
-        password = self.driver.find_element_by_xpath('//*[@id="txtSENHA"]')
+        password = self.driver.find_element(
+            By.XPATH,
+            '//*[@id="txtSENHA"]'
+        )
         password.clear()
         password.send_keys(self.credentials.get('token'))
 
-        captcha = self.driver.find_element_by_xpath(
+        captcha = self.driver.find_element(
+            By.XPATH,
             '//*[@id="captchacode"]')
         captcha.clear()
         captcha.send_keys(helpers.ocr(r'../data/a.png'))
 
         Select(
-            self.driver.find_element_by_xpath('//*[@id="cboLocal"]')
+            self.driver.find_element(By.XPATH, '//*[@id="cboLocal"]')
         ).select_by_index(1)
 
-        self.driver.find_element_by_xpath('//*[@id="btOk"]').click()
+        self.driver.find_element(By.XPATH, '//*[@id="btOk"]').click()
 
         self.handling_alert()
 
