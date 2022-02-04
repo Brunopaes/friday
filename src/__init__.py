@@ -1,5 +1,5 @@
 __all__ = [
-    'friday',
+    'friday_telegram.py',
     'punch_a_clock',
     'helpers',
     'eta',
