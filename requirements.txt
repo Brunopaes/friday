@@ -9,6 +9,7 @@ googlemaps>=4.4.2
 requests>=2.24.0
 wikipedia>=1.4.0
 bottle>=0.12.18
+discord>=1.7.3
 tweepy>=3.10.0
 Pillow>=7.2.0
 numpy>=1.19.1
