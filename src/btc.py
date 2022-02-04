@@ -74,7 +74,7 @@ class BTCoin:
 
 class Fees:
     def __init__(self, message):
-        self.message_text = message.text.lower().split(' ')
+        self.message_text = message.get('message').lower().split(' ')
         self.fees = self.extract_fees()
         self.operation = self.message_text[2]
         self.query = """
@@ -163,10 +163,10 @@ class Fees:
 
 class Trade:
     def __init__(self, message):
-        self.message_text = message.text.lower().split(' ')
+        self.message_text = message.get('message').lower().split(' ')
 
         self.username = self.format_user_name(message)
-        self.user_id = message.from_user.id
+        self.user_id = message.get('sender_id')
         self.price = self.extract_price()
 
         self.query = """
@@ -195,8 +195,8 @@ class Trade:
 
         """
         return '{} {}'.format(
-            message.from_user.first_name,
-            message.from_user.last_name,
+            message.get('first_name'),
+            message.get('last_name'),
         )
 
     # Used in extract_fees

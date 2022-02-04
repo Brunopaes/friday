@@ -77,7 +77,7 @@ def add_me(message):
 
 	Parameters
 	----------
-	message : telebot.types.Message
+	message : dict
 		The message object.
 
 	Returns
@@ -90,8 +90,8 @@ def add_me(message):
 		INSERT INTO
 			`mooncake-304003.misc.ps5-broadcast-list`
 		VALUES 
-			({message.chat.id}, "{message.chat.title if 
-	message.chat.title is not None else message.from_user.username}")
+			({message.get('chat_id')}, 
+			"{message.get('chat_title')}")
 	""")
 
 	return 'User/chat added to PS5 alert list!'
@@ -102,7 +102,7 @@ def drop_me(message):
 
 	Parameters
 	----------
-	message : telebot.types.Message
+	message : dict
 		The message object.
 
 	Returns
@@ -116,6 +116,6 @@ def drop_me(message):
 			`mooncake-304003.misc.ps5-broadcast-list`
 		WHERE
 			CHAT_ID = {}
-	""".format(message.chat.id))
+	""".format(message.get('chat_id')))
 
 	return 'User/chat removed from PS5 alert list!'

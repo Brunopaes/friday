@@ -7,6 +7,7 @@ import telebot
 import numpy
 import json
 import cv2
+import io
 import os
 
 
@@ -167,7 +168,7 @@ def check_user(user):
     -------
 
     """
-    if user != 144068478:
+    if user not in (144068478, 196426350016331776):
         raise AttributeError
 
 
@@ -277,3 +278,49 @@ class StoreMetadata:
 
     def __call__(self, *args, **kwargs):
         self.querying(self.check_processing_type())
+
+
+def telegram_payload_parser(message):
+    """This function parses Telegram message object into JSON.
+
+    Parameters
+    ----------
+    message : telebot.types.Message
+        The message object.
+
+    Returns
+    -------
+    parsed_dict : dict
+        JSON-parsed dict.
+    """
+    return StoreMetadata(message.json).check_processing_type()
+
+
+def discord_payload_parser(message):
+    try:
+        return {
+            'sender_id': message.author.id,
+            'first_name': None,
+            'last_name': None,
+            'username': message.author.name,
+            'chat_id': message.guild.id,
+            'chat_title': message.guild.name,
+            'message': message.content,
+        }
+    except AttributeError:
+        return {
+            'sender_id': message.author.id,
+            'first_name': None,
+            'last_name': None,
+            'username': message.author.name,
+            'chat_id': message.author.id,
+            'chat_title': message.author.name,
+            'message': message.content,
+        }
+
+
+def parse_reddit_submission(img):
+    bytes_ = io.BytesIO()
+    img.save(bytes_, format='PNG')
+
+    return bytes_.seek(0)

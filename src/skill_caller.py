@@ -20,7 +20,7 @@ def return_punch_a_clock(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -29,7 +29,7 @@ def return_punch_a_clock(message):
         Punch a Clock function.
 
     """
-    helpers.check_user(message.from_user.id)
+    helpers.check_user(message.get('sender_id'))
     return punch_a_clock.NexusRPA().__call__()
 
 
@@ -38,7 +38,7 @@ def return_eta(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -72,7 +72,7 @@ def return_morse(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -81,7 +81,7 @@ def return_morse(message):
         Morse parser function.
 
     """
-    return morse.morse_parser(' '.join(message.text.split(' ')[1:]))
+    return morse.morse_parser(' '.join(message.get('message').split(' ')[1:]))
 
 
 def return_coke(message):
@@ -89,7 +89,7 @@ def return_coke(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -98,7 +98,7 @@ def return_coke(message):
         Coke functions.
 
     """
-    msg_ = message.text.lower().split(' ')
+    msg_ = message.get('message').lower().split(' ')
     coke_functions = {
         'add': coke.insert_coke,
         'check': coke.aggregate,
@@ -114,7 +114,7 @@ def return_btc(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -132,7 +132,7 @@ def return_btc(message):
     def trade(nested_message):
         return btc.Trade(nested_message).__call__()
 
-    msg_ = message.text.lower().split(' ')
+    msg_ = message.get('message').lower().split(' ')
     btc_functions = {
         'price': price,
         'fees': fees,
@@ -163,7 +163,7 @@ def return_user_alert(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -176,7 +176,7 @@ def return_user_alert(message):
         'add me': stock_alerts.add_me,
         'drop me': stock_alerts.drop_me,
     }
-    return functions.get(message.text.lower())(message)
+    return functions.get(message.get('message').lower())(message)
 
 
 def return_reddit(message):
@@ -184,7 +184,7 @@ def return_reddit(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -193,9 +193,12 @@ def return_reddit(message):
         User/Chat alert list addition/removal.
 
     """
-    if message.text in ('r/guro',):
-        message.text = 'r/corgi'
-    return reddit_searcher.Reddit(message.text.split('/')[-1]).__call__()
+    if message.get('message') in ('r/guro',):
+        message['message'] = 'r/corgi'
+
+    return reddit_searcher.Reddit(
+        message.get('message').split('/')[-1]
+    ).__call__()
 
 
 def return_galo_tarsilo(message):
@@ -220,7 +223,7 @@ def return_cantina_band(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -230,7 +233,7 @@ def return_cantina_band(message):
 
     """
     return {
-        'porn': cantina_band.CantinaBand(message.text.lower()),
+        'porn': cantina_band.CantinaBand(message.get('message').lower()),
         'bible': jagshemash.Jagshemash()
     }.get(numpy.random.choice(
         ['porn', 'bible'], 1, p=[0.9, 0.1]
@@ -242,7 +245,7 @@ def return_jagshemash(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -264,7 +267,7 @@ def return_wiki(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -273,7 +276,7 @@ def return_wiki(message):
         Video url.
 
     """
-    return wiki.wiki(message.text.lower().split(' '))
+    return wiki.wiki(message.get('message').lower().split(' '))
 
 
 def return_geocoding(message):
@@ -281,7 +284,7 @@ def return_geocoding(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -290,7 +293,7 @@ def return_geocoding(message):
         Video url.
 
     """
-    return maps.geocoding(' '.join(message.text.lower().split(' ')[1:]))
+    return maps.geocoding(' '.join(message.get('message').lower().split(' ')[1:]))
 
 
 def return_geodecoding(message):
@@ -298,7 +301,7 @@ def return_geodecoding(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -307,7 +310,7 @@ def return_geodecoding(message):
         Video url.
 
     """
-    return maps.geodecoding(message.text.lower().split(' ')[1:])
+    return maps.geodecoding(message.get('message').lower().split(' ')[1:])
 
 
 def return_meli(message):
@@ -315,7 +318,7 @@ def return_meli(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -324,4 +327,4 @@ def return_meli(message):
         Video url.
 
     """
-    return meli.meli(message.text.lower().split(' '))
+    return meli.meli(message.get('message').lower().split(' '))

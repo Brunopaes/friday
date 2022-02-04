@@ -5,7 +5,8 @@ setlocal EnableExtensions
 E:
 cd E:\PythonProjects\Personal\friday\src
 
-python friday.py
+python friday_telegram.py
+python friday_discord.py
 
 :check_python_files
 call:infinite telegram_replier.py

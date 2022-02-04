@@ -8,7 +8,7 @@ def insert_coke(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -16,7 +16,7 @@ def insert_coke(message):
     msg : success or failure message - to be displayed at Telegram's chat.
 
     """
-    message_text = message.text.lower().split(' ')
+    message_text = message.get('message').lower().split(' ')
     try:
         value = float(message_text[-1])
     except ValueError:
@@ -24,10 +24,10 @@ def insert_coke(message):
 
     client = helpers.start_connection()
 
-    user_id = message.from_user.id
+    user_id = message.get('sender_id')
     username = '{} {}'.format(
-        message.from_user.first_name,
-        message.from_user.last_name
+        message.get('first_name'),
+        message.get('last_name')
     )
 
     client.query("""
@@ -45,7 +45,7 @@ def aggregate(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -154,9 +154,9 @@ def aggregate(message):
         """
     }
 
-    periodicity = message.text.lower().split(' ')[-1]
+    periodicity = message.get('message').lower().split(' ')[-1]
 
-    user_id = message.from_user.id
+    user_id = message.get('sender_id')
 
     query_result = \
         [i for i in client.query(query_dict.get(periodicity).format(user_id))]
@@ -183,7 +183,7 @@ def reset(message):
 
     Parameters
     ----------
-    message : telebot.types.Message
+    message : dict
         The message object.
 
     Returns
@@ -199,7 +199,7 @@ def reset(message):
         `mooncake-304003.misc.coca-cola`
     WHERE
         USER_ID = {}
-        """.format(message.from_user.id))
+        """.format(message.get('sender_id')))
 
     return 'Statistics successfully reset!'
 
