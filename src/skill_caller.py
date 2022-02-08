@@ -328,3 +328,7 @@ def return_meli(message):
 
     """
     return meli.meli(message.get('message').lower().split(' '))
+
+
+def hello_there(message):
+    print(message)

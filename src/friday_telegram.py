@@ -25,7 +25,7 @@ def message_handler(message):
         The message object.
 
     """
-    payload = helpers.telegram_payload_parser(message)
+    payload = helpers.TelegramPayloadParser(message).__call__()
     message_text = payload.get('message').lower().split(' ')
     try:
         if len(message.text.split(' ')) > 1:
@@ -67,7 +67,7 @@ def message_handler(message):
     except Exception as e:
         e.args
 
-    helpers.StoreMetadata(message.json).__call__()
+    helpers.StoreMetadata(payload).__call__()
 
 
 while True:

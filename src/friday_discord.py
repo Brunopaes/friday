@@ -1,18 +1,47 @@
 # -*- coding: utf-8 -*-
-import helpers
+from discord.ext.commands import Bot
+
+import asyncio
 import discord
+import helpers
 import skills
 import io
 
-friday = discord.Client()
+friday = Bot(command_prefix='')
 
 functions = skills.functions
 arg_functions = skills.arg_functions
 media_functions = skills.media_functions
 
 
+@friday.command(
+    name='hello there',
+    aliases=('Hello', 'hello', 'HELLO', 'HELLO THERE', 'Hello There'),
+    description='General Kenobi',
+    pass_context=True
+)
+async def hello_there(context):
+    payload = helpers.discord_payload_parser(context)
+    if context.message.content.lower() != 'hello there':
+        return
+
+    if context.author.voice:
+        channel = context.message.author.voice.channel
+        voice = await channel.connect()
+
+        voice.play(discord.FFmpegPCMAudio('../data/generalkenobi.mp3'))
+
+        while voice.is_playing():
+            await asyncio.sleep(1)
+
+        await voice.disconnect()
+
+    helpers.StoreMetadata(payload).__call__()
+
+
 @friday.event
 async def on_message(message):
+    await friday.process_commands(message)
     if message.author.id == friday.user.id:
         return
 
@@ -29,23 +58,37 @@ async def on_message(message):
             response = functions.get(message_text[0])(payload)
         except TypeError:
             try:
-                bytes_ = io.BytesIO()
+                if payload.get('message').startswith('r/'):
+                    bytes_ = io.BytesIO()
 
-                image = media_functions.get('r/')(payload)
-                image.save(bytes_, format='png')
-                bytes_.seek(0)
+                    image = media_functions.get('r/')(payload)
+                    image.save(bytes_, format='png')
+                    bytes_.seek(0)
 
-                d_file = discord.File(bytes_, filename='image.png')
+                    d_file = discord.File(bytes_, filename='image.png')
 
-                response = 'Random submission from {}'.format(
-                    payload.get('message')
-                )
+                    response = 'Random submission from {}'.format(
+                        payload.get('message')
+                    )
+                else:
+                    response = functions.get(
+                        payload.get('message')
+                    )(message)
             except Exception as e:
                 e.args
-                response = \
-                    'Impossible, perhaps the archives are incomplete!'
+                response = None
 
-    await message.channel.send(response, file=d_file)
+    if response is None:
+        return
+
+    try:
+        await message.channel.send(response, file=d_file)
+    except discord.errors.HTTPException:
+        await message.channel.send(
+            'Impossible, perhaps the archives are incomplete!'
+        )
+
+    helpers.StoreMetadata(payload).__call__()
 
 
 friday.run(
