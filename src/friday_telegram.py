@@ -51,9 +51,10 @@ def message_handler(message):
                     media_functions.get(
                         'r/' if message_text[0].startswith('r/')
                         else message_text[0]
-                    )(message),
-                    caption='Random submission form {}'.format(message_text[0])
-                    if message_text[0].startswith('r/') else ''
+                    )(payload),
+                    caption='Random submission form {}'.format(
+                        message_text[0]
+                    ) if message_text[0].startswith('r/') else ''
                 )
             except telebot.apihelper.ApiException:
                 friday.send_message(

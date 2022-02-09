@@ -39,6 +39,39 @@ async def hello_there(context):
     helpers.StoreMetadata(payload).__call__()
 
 
+@friday.command(
+    name='darth plagueis',
+    aliases=(
+            'darth', 'Darth', 'DARTH',
+            'tragedy', 'Tragedy', 'TRAGEDY',
+            'tragédia', 'Tragédia', 'TRAGÉDIA',
+            'ironic', 'Ironic', 'IRONIC'
+    ),
+    description='General Kenobi',
+    pass_context=True
+)
+async def darth_plagueis(context):
+    payload = helpers.discord_payload_parser(context)
+    url = 'https://www.youtube.com/watch?v=05dT34hGRdg'
+
+    if context.author.voice:
+        channel = context.message.author.voice.channel
+        voice = await channel.connect()
+
+        audio_tuple = helpers.youtube_video_player(url)
+
+        voice.play(discord.FFmpegPCMAudio(
+            audio_tuple[0], **audio_tuple[1]
+        ))
+
+        while voice.is_playing():
+            await asyncio.sleep(1)
+
+        await voice.disconnect()
+
+    helpers.StoreMetadata(payload).__call__()
+
+
 @friday.event
 async def on_message(message):
     await friday.process_commands(message)

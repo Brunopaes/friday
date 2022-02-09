@@ -3,11 +3,11 @@ from google.cloud import bigquery
 from PIL import Image
 
 import pytesseract
+import youtube_dl
 import telebot
 import numpy
 import json
 import cv2
-import io
 import os
 
 
@@ -330,7 +330,7 @@ def discord_payload_parser(message):
             }
         except AttributeError:
             try:
-               return {
+                return {
                     'sender_id': message.author.id,
                     'first_name': None,
                     'last_name': None,
@@ -352,3 +352,33 @@ def discord_payload_parser(message):
                     'system_origin': 'Discord'
                 }
 
+
+def youtube_video_player(url):
+    """This function returns youtube audio links.
+
+    Parameters
+    ----------
+    url : string
+        Video URL.
+
+    Returns
+    -------
+    y_dl : tuple
+        audio url with ffmpeg_options
+
+    """
+    ffmpeg_options = {
+        'before_options': '-reconnect 1 -reconnect_streamed 1 '
+                          '-reconnect_delay_max 5',
+        'options': '-vn'
+    }
+
+    with youtube_dl.YoutubeDL({
+        'format': 'bestaudio',
+        'noplaylist': 'True'
+    }) as y_dl:
+
+        return (y_dl.extract_info(
+            url,
+            download=False
+        )['formats'][0]['url'], ffmpeg_options)
