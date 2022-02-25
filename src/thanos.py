@@ -1,32 +1,30 @@
-from PIL import Image
-
-import helpers
-import io
+import random
+import pandas
 import os
-
-client = helpers.start_connection()
-query = """
-    INSERT INTO
-        `mooncake-304003.misc.elo-playboy`
-    VALUES
-        ("{}", "{}")
-"""
-
-
-def binarize(filepath):
-    return open(filepath, "rb")
-
-
-def de_binarize(bytes_):
-    return Image.open(io.BytesIO(bytes_))
 
 
 if __name__ == '__main__':
     directory = r'C:\Users\Bruno\iCloudDrive\Documents' \
-                r'\Playboy\Playboy Photos\alejandra-guilmant'
+                r'\Playboy\Playboy Photos'
 
-    dict_ = {}
-    for file in os.listdir(directory):
-        dict_[file] = binarize(r'{}\{}'.format(directory, file))
+    model_dict = {
+        'MODEL_ID': [],
+        'MODEL_NAME': [],
+        'MODEL_ALBUM': []
+    }
+    for i in os.listdir(directory):
+        if len(i.split('-and-')) > 1:
+            for j in i.split('-and-'):
+                random.seed(j)
+                model_dict.get('MODEL_ID').append(
+                    random.randint(1, 100000)
+                )
+                model_dict.get('MODEL_NAME').append(j)
+                model_dict.get('MODEL_ALBUM').append(i)
+        else:
+            random.seed(i)
+            model_dict.get('MODEL_ID').append(random.randint(1, 100000))
+            model_dict.get('MODEL_NAME').append(i)
+            model_dict.get('MODEL_ALBUM').append(i)
 
-    client.query(query=query.format('alejandra-guilmant', dict_.get('alejandra-guilmant-1.jpg')))
+    df = pandas.DataFrame(model_dict)
