@@ -15,7 +15,8 @@ class CreatingDB:
         self.model_dict = {
             'MODEL_ID': [],
             'MODEL_NAME': [],
-            'MODEL_ALBUM': []
+            'ALBUM': [],
+            'PICTURE': []
         }
 
     @staticmethod
@@ -24,31 +25,54 @@ class CreatingDB:
         return random.randint(1, 1000000)
 
     def filling_file(self):
-        for i in os.listdir(
-                r'{}\\Playboy Photos'.format(self.directory)):
-            if len(i.split('-and-')) > 1:
-                for j in i.split('-and-'):
-                    random.seed(j)
-                    self.model_dict.get('MODEL_ID').append(
-                        self.getting_hash(j)
+        for model_dir in os.listdir(r'{}\\Playboy Photos'.format(
+                self.directory
+        )):
+            for photo in os.listdir(r'{}\\Playboy Photos\\{}'.format(
+                    self.directory, model_dir
+            )):
+                if len(model_dir.split('-and-')) > 1:
+                    for model in model_dir.split('-and-'):
+                        self.model_dict.get('MODEL_ID').append(
+                            self.getting_hash(model)
+                        )
+                        self.model_dict.get('MODEL_NAME').append(
+                            ' '.join([
+                                i.capitalize() for i in model.split('-')
+                            ])
+                        )
+                        self.model_dict.get('ALBUM').append(
+                            '-'.join(photo.split('-')[:-1])
+                        )
+                        self.model_dict.get('PICTURE').append(
+                            photo
+                        )
+                else:
+                    self.model_dict.get('MODEL_NAME').append(
+                        ' '.join([
+                            i.capitalize() for i in model_dir.split('-')
+                        ])
                     )
-                    self.model_dict.get('MODEL_NAME').append(j)
-                    self.model_dict.get('MODEL_ALBUM').append(i)
-            else:
-                self.model_dict.get('MODEL_ID').append(
-                    self.getting_hash(i)
-                )
-                self.model_dict.get('MODEL_NAME').append(i)
-                self.model_dict.get('MODEL_ALBUM').append(i)
+                    self.model_dict.get('MODEL_ID').append(
+                        self.getting_hash(model_dir)
+                    )
+                    self.model_dict.get('ALBUM').append(
+                        '-'.join(photo.split('-')[:-1])
+                    )
+                    self.model_dict.get('PICTURE').append(
+                        photo
+                    )
 
     def writing_file(self):
         df = pandas.DataFrame(self.model_dict)
-        df['MODEL_ELO'] = 1000
-        df['ALBUM_ELO'] = 1000
+        df['ELO_RATING'] = 1000
+
+        df.sort_values(['MODEL_NAME', 'PICTURE'], inplace=True)
 
         df.to_csv(
             r'{}\\playboyonreddit-elo.csv'.format(self.directory),
-            index=False
+            index=False,
+            encoding='latin-1'
         )
 
     def __call__(self, *args, **kwargs):
@@ -66,9 +90,8 @@ class PictureFormatter:
     def choosing_opponents(self):
         competitors_list = list(set(
             pandas.read_csv(r'{}\\playboyonreddit-elo.csv'.format(
-                    self.directory
-                )
-            ).MODEL_ALBUM.to_list()))
+                self.directory
+            ), encoding='latin-1').ALBUM.to_list()))
 
         competitor_a, competitor_b = (
             random.choice(competitors_list),
@@ -83,14 +106,17 @@ class PictureFormatter:
     def choosing_pictures(self):
         for competitor in self.competitors:
             yield random.choice(os.listdir(
-                r'{}\\Playboy Photos\{}'.format(
+                r'{}\Playboy Photos\{}'.format(
                     self.directory,
                     competitor
                 )
             ))
 
     def opening_pictures(self):
-        for picture, competitor in zip(self.pictures_paths, self.competitors):
+        for picture, competitor in zip(
+                self.pictures_paths,
+                self.competitors
+        ):
             yield PIL.Image.open(r'{}\Playboy Photos\{}\{}'.format(
                 self.directory,
                 competitor,
@@ -124,7 +150,10 @@ class PictureFormatter:
                 self.pil_objects[0].filename.split('\\')[-1],
                 self.pil_objects[1].filename.split('\\')[-1]
             ),
-            self.competitors
+            (
+                self.pil_objects[0].filename.split('\\')[-1],
+                self.pil_objects[1].filename.split('\\')[-1]
+            )
         )
 
 
@@ -143,9 +172,9 @@ class FrontEnd:
     @staticmethod
     def formatting_names(competitors):
         for competitor in competitors:
-            yield ' '.join(
+            yield ' '.join(' '.join(
                 [i.capitalize() for i in competitor.split('-')]
-            )
+            ).split(' ')[:-1])
 
     def building_application(self):
         frame = tkinter.Frame(self.root, width=600, height=400)
@@ -167,7 +196,7 @@ class FrontEnd:
                 self.competitor_b
             )
         )
-        button.place(width=690, x=260, y=820)
+        button.place(width=690, height=80, x=260, y=820)
 
         button_2 = tkinter.Button(
             self.root, text=self.competitor_name_b,
@@ -176,33 +205,45 @@ class FrontEnd:
                 self.competitor_a
             )
         )
-        button_2.place(width=690, x=970, y=820)
+        button_2.place(width=690, height=80, x=970, y=820)
 
         self.root.state('zoomed')
         self.root.mainloop()
 
     def get_winner(self, winner, loser):
-        df = pandas.read_csv(r'{}\\playboyonreddit-elo.csv'.format(self.directory))
+        df = pandas.read_csv(
+            r'{}\\playboyonreddit-elo.csv'.format(self.directory),
+            encoding='latin-1'
+        )
 
-        df_winner = df[df['MODEL_ALBUM'] == winner]
-        df_loser = df[df['MODEL_ALBUM'] == loser]
+        df_winner = df[df['PICTURE'] == winner]
+        df_loser = df[df['PICTURE'] == loser]
 
-        competitors = (df_winner.MODEL_ALBUM.values[0], df_loser.MODEL_ALBUM.values[0])
-        ratings = (df_winner.ALBUM_ELO.values[0], df_loser.ALBUM_ELO.values[0])
+        competitors = (
+            df_winner.PICTURE.values[0],
+            df_loser.PICTURE.values[0]
+        )
+        ratings = (
+            df_winner.ELO_RATING.values[0],
+            df_loser.ELO_RATING.values[0]
+        )
 
-        res = helpers.EloCalculator(winner, ratings, competitors).__call__()
+        res = helpers.EloCalculator(
+            winner, ratings, competitors
+        ).__call__()
 
         df.loc[
-            df['MODEL_ALBUM'] == competitors[0], 'ALBUM_ELO'
+            df['PICTURE'] == competitors[0], 'ELO_RATING'
         ] = res.get(competitors[0])
 
         df.loc[
-            df['MODEL_ALBUM'] == competitors[1], 'ALBUM_ELO'
+            df['PICTURE'] == competitors[1], 'ELO_RATING'
         ] = res.get(competitors[1])
 
         df.to_csv(
             r'{}\\playboyonreddit-elo.csv'.format(self.directory),
-            index=False
+            index=False,
+            encoding='latin-1'
         )
 
         self.root.destroy()
@@ -212,6 +253,6 @@ class FrontEnd:
 
 
 if __name__ == '__main__':
+    # CreatingDB().__call__()
     while True:
         FrontEnd(*PictureFormatter().__call__()).__call__()
-    # helpers.EloCalculator('a', (1200, 1000), ('a', 'b')).__call__()
