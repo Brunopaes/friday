@@ -7,6 +7,7 @@ import youtube_dl
 import telebot
 import numpy
 import json
+import math
 import cv2
 import os
 
@@ -382,3 +383,37 @@ def youtube_video_player(url):
             url,
             download=False
         )['formats'][0]['url'], ffmpeg_options)
+
+
+class EloCalculator:
+    def __init__(self, winner, ratings, competitors):
+        self.k = 50
+        self.winner = winner
+        self.ratings = ratings
+        self.competitors = competitors
+        self.response = {}
+
+    @staticmethod
+    def calculating_win_probability(rating_1, rating_2):
+        return 1.0 * 1.0 / (1 + 1.0 * math.pow(10, 1.0 * (rating_2 - rating_1) / 400))
+
+    def updating_elo(self, pa, pb):
+        if self.winner == self.competitors[0]:
+            ra = self.ratings[0] + (self.k * (1 - pa))
+            rb = self.ratings[1] + (self.k * (0 - pb))
+        else:
+            ra = self.ratings[0] + (self.k * (0 - pa))
+            rb = self.ratings[1] + (self.k * (1 - pb))
+
+        self.ratings = ra, rb
+
+    def __call__(self, *args, **kwargs):
+        self.updating_elo(
+            self.calculating_win_probability(*self.ratings),
+            self.calculating_win_probability(*(self.ratings[::-1]))
+        )
+
+        for competitor, rating in zip(self.competitors, self.ratings):
+            self.response[competitor] = rating
+
+        return self.response
