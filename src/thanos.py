@@ -253,6 +253,5 @@ class FrontEnd:
 
 
 if __name__ == '__main__':
-    # CreatingDB().__call__()
     while True:
         FrontEnd(*PictureFormatter().__call__()).__call__()
