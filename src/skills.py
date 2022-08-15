@@ -23,6 +23,7 @@ arg_functions = {
     'ping': skill_caller.return_geocoding,
     'pong': skill_caller.return_geodecoding,
     'ml': skill_caller.return_meli,
+    'summon': skill_caller.return_summonizer,
 }
 
 media_functions = {

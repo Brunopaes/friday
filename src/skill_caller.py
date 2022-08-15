@@ -4,6 +4,7 @@ import punch_a_clock
 import stock_alerts
 import cantina_band
 import jagshemash
+import wawaweewa
 import helpers
 import morse
 import numpy
@@ -13,7 +14,6 @@ import meli
 import wiki
 import btc
 import eta
-
 
 def return_punch_a_clock(message):
     """Middle function for calling punch_a_clock package.
@@ -330,5 +330,28 @@ def return_meli(message):
     return meli.meli(message.get('message').lower().split(' '))
 
 
-def hello_there(message):
-    print(message)
+def return_summonizer(message):
+    """Middle function for calling wawaweewa package.
+
+    Parameters
+    ----------
+    message : dict
+        The message object.
+
+    Returns
+    -------
+    msg : str
+        Video url.
+
+    """
+    if 'list' in message.get('message'):
+        return wawaweewa.SummonizerList().__call__()
+    elif 'album' in message.get('message'):
+        return wawaweewa.Summonizer(
+            message.get('message').split('album ')[-1],
+            'album'
+        ).__call__()
+    else:
+        return wawaweewa.Summonizer(
+            ' '.join(message.get('message').split(' ')[1:])
+        ).__call__()
