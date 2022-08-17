@@ -51,7 +51,7 @@ class Summonizer:
                 FROM
                     `mooncake-304003.wawaweewa.albums` 
                 WHERE
-                    CONCAT(model_name, " - ", album_name) = "{}"
+                    album_name LIKE "%{}%"
                 """.format(self.model_name)
             )
         else:
