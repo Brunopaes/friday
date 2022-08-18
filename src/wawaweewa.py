@@ -20,6 +20,8 @@ class SummonizerList:
                 A.model_name = B.full_name
             ORDER BY
                 model_name
+            LIMIT
+                10  
             """)
 
         self.results = self.querying()
@@ -28,14 +30,21 @@ class SummonizerList:
         return self.client.query(self.query)
 
     def __call__(self, *args, **kwargs):
-        return '\n'.join([' - '.join(i[0:2]) for i in self.results])
+        string_response = '\n'.join(
+            [' - '.join(i[0:2]) for i in self.results]
+        )
+
+        return '{}\n\n{}'.format(
+            string_response,
+            'https://datastudio.google.com/reporting/946413df-d478-4614-b6d6-40bd4573db85'
+        )
 
 
 class Summonizer:
     def __init__(self, model_name, query_type='model'):
         self.model_name = ' '.join(
             [i.capitalize() for i in model_name.split(' ')]
-        ) if query_type == 'model' else model_name
+        ) if query_type == 'model' else model_name.lower()
 
         self.client = helpers.start_connection()
         self.query = self.defining_query(query_type)
@@ -51,7 +60,7 @@ class Summonizer:
                 FROM
                     `mooncake-304003.wawaweewa.albums` 
                 WHERE
-                    album_name LIKE "%{}%"
+                    LOWER(album_name) LIKE "%{}%"
                 """.format(self.model_name)
             )
         else:
