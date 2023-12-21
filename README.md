@@ -1,86 +1,29 @@
-## Friday: Female Replacement Intelligent Digital Assistant Youth
+# ADA: Artificial Directory and Assistant
 
-<small>_Optimized for python 3.8+_</small>
-
-This project is aimed on creating a telegram personal assistant for replying
- messages and automating daily tasks by using specific ```commands```.
+Personal assistant for messaging applications (e.g. `Telegram`, 
+`Discord`, `Whatsapp`). Project is composed by its `handlers` and 
+`processors` or `skill-modules` to process handled requisitions. 
+The great majority of `processors` are interchangeable between 
+message `handlers`.
 
 ------------------------------
 
-### Project's Structure
+## Settings
 
-```bash
-.
-└── friday
-    ├── data
-    │   └── a.png
-    ├── docs
-    │   └── CREDITS
-    ├── src
-    │   ├── cnn
-    │   │   ├── CNN.model
-    │   │   │   └── saved_model.pb
-    │   │   ├── data
-    │   │   │   ├── non-wawaweewa
-    │   │   │   └── wawaweewa
-    │   │   ├── __init__.py
-    │   │   ├── helpers.py
-    │   │   ├── vega_fitting.py
-    │   │   └── vega_preditcting.py
-    │   ├── settings
-    │   │   └── settings.json
-    │   ├── __init__.py
-    │   ├── settings.json
-    │   └── telegram_replier.py
-    ├── tests
-    │   └── unittests
-    │   └── __init__.py
-    ├── .gitignore
-    ├── LICENSE
-    ├── README.md
-    └── requirements.txt
-```
-----------------
+To properly run it's several skills, ``ADA`` requires to have it 
+all configured through a setting``.json`` file.
 
-#### Directory description
+<details><summary>Telegram</summary>
 
-- __data:__ The data dir. Group of non-script support files.
-- __docs:__ The documentation dir.
-- __src:__ The scripts & source code dir.
-- __tests:__ The unittests dir.
-
-----------------
-
-## Usage Notes
-
-Section aimed on clarifying some running issues.
-
-### Running
-
-For running it, at the `~/src` directory just run:
-
-```shell script
-python telegram_replier.py
-``` 
-
-or, if importing it as a module, just run:
-````python
-from friday import message_handler
-
-if __name__ == '__main__':
-    message_handler('args', 'kwargs')
-````
-
-### Settings
-
-- ``telegram_settings.json``:
 ````json
 {
   "token": "541233:A12JASBN12JASIJDW12321KN"
 }
 ````
+</details>
 
-- `gcp_settings.json`
+<details><summary>Google Cloud</summary>
+
 ````json
 {
   "type": "service_account",
@@ -96,14 +39,19 @@ if __name__ == '__main__':
 }
 ````
 
-- `maps_settings.json`
+</details>
+
+<details><summary>Google Maps</summary>
+
 ````json
 {
   "api_key": "AIzaSyDx2RCq2og6zp5aYbnProvMjCWletM03B0"
 }
 ````
+</details>
 
-- `ps_settings.json`
+<details><summary>Twitter</summary>
+
 ````json
 {
   "consumer": {
@@ -116,13 +64,17 @@ if __name__ == '__main__':
   }
 }
 ````
+</details>
 
-- `punch_a_clock.json`
+<details><summary>Punch a Clock</summary>
+
 ````json
 {
   "cpf": "64454554845",
   "token": "948484545488454554"
 }
 ````
+
+</details>
 
 ---------------
