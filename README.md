@@ -1,4 +1,4 @@
-# ADA: Artificial Directory and Assistant
+# Friday: Female Replacement Intelligent Digital Assistant Youth
 
 Personal assistant for messaging applications (e.g. `Telegram`, 
 `Discord`, `Whatsapp`). Project is composed by its `handlers` and 
@@ -70,7 +70,7 @@ all configured through a setting``.json`` file.
 
 ````json
 {
-  "cpf": "64454554845",
+  "cpf": "41680065815",
   "token": "948484545488454554"
 }
 ````
